@@ -11,9 +11,9 @@ using PELib;
 
 namespace PEBrowser.Controls
 {
-    internal partial class PEHeaderControl : UserControl
+    internal partial class PEHeaderControl : UserControl, IPEFileViewer
     {
-        private OpenPEFile m_pe;
+        
 
         private const int RowHeight = 20;
 
@@ -26,10 +26,18 @@ namespace PEBrowser.Controls
             InitDgv(dgvOptionalHeader2);
         }
 
+        private OpenPEFile m_pe;
+        public OpenPEFile PEFile {
+            get { return m_pe; }
+            set {
+                m_pe = value;
+                UpdateUI();
+            }
+        }
 
-        public void FileOpened(OpenPEFile file) {
-            m_pe = file;
 
+        public void UpdateUI()
+        {
             PopulateFileHeader();
             PopulateOptionalHeader();
         }
@@ -53,14 +61,18 @@ namespace PEBrowser.Controls
 
 
         private void PopulateFileHeader() {
-            var fh = m_pe.PE.FileHeader;
+            dgvFileHeader.Rows.Clear();
+
+            if (PEFile == null) return;
+
+            var fh = PEFile.PE.FileHeader;
 
             if (Enum.IsDefined(typeof (PeFile.IMAGE_FILE_MACHINE), fh.Machine))
                 dgvFileHeader.Rows.Add("Machine", (UInt16)fh.Machine, fh.Machine);
             else
                 dgvFileHeader.Rows.Add("Machine", (UInt16)fh.Machine);
             dgvFileHeader.Rows.Add("Number of Sections", fh.NumberOfSections);
-            dgvFileHeader.Rows.Add("Time Date Stamp", fh.TimeDateStamp, m_pe.PE.TimeStamp);
+            dgvFileHeader.Rows.Add("Time Date Stamp", fh.TimeDateStamp, PEFile.PE.TimeStamp);
             dgvFileHeader.Rows.Add("Pointer to Symbol Table", fh.PointerToSymbolTable);
             dgvFileHeader.Rows.Add("Number of Symbols", fh.NumberOfSymbols);
             dgvFileHeader.Rows.Add("Size of Optional Header", fh.SizeOfOptionalHeader);
@@ -69,7 +81,12 @@ namespace PEBrowser.Controls
 
 
         private void PopulateOptionalHeader() {
-            var oh = m_pe.PE.OptionalHeader;
+            dgvOptionalHeader.Rows.Clear();
+            dgvOptionalHeader2.Rows.Clear();
+
+            if (PEFile == null) return;
+
+            var oh = PEFile.PE.OptionalHeader;
 
             dgvOptionalHeader.Rows.Add("Magic", (UInt16)oh.Magic, oh.Magic);
             dgvOptionalHeader.Rows.Add("Linker Version", oh.MinorLinkerVersion << 8 | oh.MajorLinkerVersion,

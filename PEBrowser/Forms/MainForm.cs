@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -9,10 +10,16 @@ namespace PEBrowser.Forms
     public partial class MainForm : Form
     {
         private OpenPEFile m_pe;
+        private readonly IEnumerable<IPEFileViewer> m_peFileViewers;
 
         public MainForm()
         {
             InitializeComponent();
+
+            m_peFileViewers = new List<IPEFileViewer> {
+                peHeaderControl,
+                peDataDirectoriesControl
+            };
 
             LogLine("Started up.");
         }
@@ -116,8 +123,6 @@ namespace PEBrowser.Forms
         private void OnFileOpened() {
             LogLineFormat("File size: 0x{0:X} ({0})", m_pe.FileSize);
 
-            peHeaderControl.FileOpened(m_pe);
-
             UpdateGuiState();
         }
 
@@ -136,9 +141,15 @@ namespace PEBrowser.Forms
             UpdateGuiState();
         }
 
+        
+
         private void UpdateGuiState() {
             mnuFileClose.Enabled = m_pe != null;
             tsbClose.Enabled = m_pe != null;
+
+            foreach (var viewer in m_peFileViewers) {
+                viewer.PEFile = m_pe;
+            }
         }
 
         #endregion
