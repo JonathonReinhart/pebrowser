@@ -46,10 +46,10 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageHeaders = new System.Windows.Forms.TabPage();
+            this.peHeaderControl = new PEBrowser.Controls.PEHeaderControl();
             this.tabPageDataDirectories = new System.Windows.Forms.TabPage();
             this.tabPageSections = new System.Windows.Forms.TabPage();
             this.logBox = new PEBrowser.Controls.LogBox();
-            this.peHeaderControl = new PEBrowser.Controls.PEHeaderControl();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -68,7 +68,7 @@
             this.mnuHelp});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(784, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(809, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -143,7 +143,7 @@
             this.tsbClose});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(784, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(809, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -176,9 +176,9 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 540);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 722);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(809, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -196,8 +196,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.logBox);
-            this.splitContainer1.Size = new System.Drawing.Size(784, 491);
-            this.splitContainer1.SplitterDistance = 359;
+            this.splitContainer1.Size = new System.Drawing.Size(809, 673);
+            this.splitContainer1.SplitterDistance = 492;
             this.splitContainer1.TabIndex = 4;
             // 
             // tabControl1
@@ -209,7 +209,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(784, 359);
+            this.tabControl1.Size = new System.Drawing.Size(809, 492);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPageHeaders
@@ -218,10 +218,19 @@
             this.tabPageHeaders.Location = new System.Drawing.Point(4, 22);
             this.tabPageHeaders.Name = "tabPageHeaders";
             this.tabPageHeaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageHeaders.Size = new System.Drawing.Size(776, 333);
+            this.tabPageHeaders.Size = new System.Drawing.Size(801, 466);
             this.tabPageHeaders.TabIndex = 0;
             this.tabPageHeaders.Text = "Headers";
             this.tabPageHeaders.UseVisualStyleBackColor = true;
+            // 
+            // peHeaderControl
+            // 
+            this.peHeaderControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.peHeaderControl.Location = new System.Drawing.Point(3, 3);
+            this.peHeaderControl.MinimumSize = new System.Drawing.Size(660, 460);
+            this.peHeaderControl.Name = "peHeaderControl";
+            this.peHeaderControl.Size = new System.Drawing.Size(795, 460);
+            this.peHeaderControl.TabIndex = 0;
             // 
             // tabPageDataDirectories
             // 
@@ -248,22 +257,14 @@
             this.logBox.Location = new System.Drawing.Point(0, 0);
             this.logBox.Name = "logBox";
             this.logBox.NewestOnTop = false;
-            this.logBox.Size = new System.Drawing.Size(784, 128);
+            this.logBox.Size = new System.Drawing.Size(809, 177);
             this.logBox.TabIndex = 0;
-            // 
-            // peHeaderControl
-            // 
-            this.peHeaderControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.peHeaderControl.Location = new System.Drawing.Point(3, 3);
-            this.peHeaderControl.Name = "peHeaderControl";
-            this.peHeaderControl.Size = new System.Drawing.Size(770, 327);
-            this.peHeaderControl.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 562);
+            this.ClientSize = new System.Drawing.Size(809, 744);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);

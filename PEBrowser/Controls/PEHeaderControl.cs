@@ -23,6 +23,7 @@ namespace PEBrowser.Controls
 
             InitDgv(dgvFileHeader);
             InitDgv(dgvOptionalHeader);
+            InitDgv(dgvOptionalHeader2);
         }
 
 
@@ -37,13 +38,13 @@ namespace PEBrowser.Controls
             dgv.ColumnAdded += (s, a) => { a.Column.SortMode = DataGridViewColumnSortMode.NotSortable; };
 
             dgv.Columns.Add("field", "Field Name");
-            dgv.Columns["field"].Width = 120;
+            dgv.Columns["field"].Width = 140;
 
             dgv.Columns.Add("value", "Data Value");
             dgv.Columns["value"].CellTemplate = new HexCell();
             
             
-            dgv.Columns.Add("description", "Descrtiption");
+            dgv.Columns.Add("description", "Description");
             dgv.Columns["description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             dgv.RowTemplate.Height = RowHeight;
@@ -90,22 +91,24 @@ namespace PEBrowser.Controls
             dgvOptionalHeader.Rows.Add("Section Alignment", oh.SectionAlignment);
             dgvOptionalHeader.Rows.Add("File Alignment", oh.FileAlignment);
             
-            dgvOptionalHeader.Rows.Add("Operating System Version", oh.MinorOperatingSystemVersion << 8 | oh.MajorOperatingSystemVersion,
+
+
+            dgvOptionalHeader2.Rows.Add("Operating System Version", oh.MinorOperatingSystemVersion << 8 | oh.MajorOperatingSystemVersion,
                 String.Format("{0}.{1}", oh.MajorOperatingSystemVersion, oh.MinorOperatingSystemVersion));
 
-            dgvOptionalHeader.Rows.Add("Image Version", oh.MinorImageVersion << 8 | oh.MajorImageVersion,
+            dgvOptionalHeader2.Rows.Add("Image Version", oh.MinorImageVersion << 8 | oh.MajorImageVersion,
                 String.Format("{0}.{1}", oh.MajorImageVersion, oh.MinorImageVersion));
 
-            dgvOptionalHeader.Rows.Add("Subsystem Version", oh.MinorSubsystemVersion << 8 | oh.MajorSubsystemVersion,
+            dgvOptionalHeader2.Rows.Add("Subsystem Version", oh.MinorSubsystemVersion << 8 | oh.MajorSubsystemVersion,
                 String.Format("{0}.{1}", oh.MajorSubsystemVersion, oh.MinorSubsystemVersion));
 
 
-            dgvOptionalHeader.Rows.Add("Win32 Version Value", oh.Win32VersionValue, "Reserved");
-            dgvOptionalHeader.Rows.Add("Size of Image", oh.SizeOfImage, oh.SizeOfImage + " bytes");
-            dgvOptionalHeader.Rows.Add("Size of Headers", oh.SizeOfHeaders);
-            dgvOptionalHeader.Rows.Add("Checksum", oh.CheckSum);
-            dgvOptionalHeader.Rows.Add("Subsystem", (UInt16)oh.Subsystem, oh.Subsystem);
-            dgvOptionalHeader.Rows.Add("DLL Characteristics", oh.DllCharacteristics);
+            dgvOptionalHeader2.Rows.Add("Win32 Version Value", oh.Win32VersionValue, "Reserved");
+            dgvOptionalHeader2.Rows.Add("Size of Image", oh.SizeOfImage, oh.SizeOfImage + " bytes");
+            dgvOptionalHeader2.Rows.Add("Size of Headers", oh.SizeOfHeaders);
+            dgvOptionalHeader2.Rows.Add("Checksum", oh.CheckSum);
+            dgvOptionalHeader2.Rows.Add("Subsystem", (UInt16)oh.Subsystem, oh.Subsystem);
+            dgvOptionalHeader2.Rows.Add("DLL Characteristics", oh.DllCharacteristics);
 
             object stackres, stackcom, heapres, heapcom;
             if (oh.IsPE32Plus) {
@@ -120,13 +123,13 @@ namespace PEBrowser.Controls
                 heapres = (UInt32)oh.SizeOfHeapReserve;
                 heapcom = (UInt32)oh.SizeOfHeapCommit;
             }
-            dgvOptionalHeader.Rows.Add("Size of Stack Reserve", stackres);
-            dgvOptionalHeader.Rows.Add("Size of Stack Commit", stackcom);
-            dgvOptionalHeader.Rows.Add("Size of Heap Reserve", heapres);
-            dgvOptionalHeader.Rows.Add("Size of Heap Commit", heapcom);
+            dgvOptionalHeader2.Rows.Add("Size of Stack Reserve", stackres);
+            dgvOptionalHeader2.Rows.Add("Size of Stack Commit", stackcom);
+            dgvOptionalHeader2.Rows.Add("Size of Heap Reserve", heapres);
+            dgvOptionalHeader2.Rows.Add("Size of Heap Commit", heapcom);
 
-            dgvOptionalHeader.Rows.Add("Loader Flags", oh.LoaderFlags, "Obsolete");
-            dgvOptionalHeader.Rows.Add("Number of Data Directories", oh.NumberOfRvaAndSizes);
+            dgvOptionalHeader2.Rows.Add("Loader Flags", oh.LoaderFlags, "Obsolete");
+            dgvOptionalHeader2.Rows.Add("Number of Data Directories", oh.NumberOfRvaAndSizes);
         }
     }
 
