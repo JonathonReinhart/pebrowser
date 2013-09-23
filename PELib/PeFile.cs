@@ -123,144 +123,7 @@ namespace PELib
             public UInt32 Size;
         }
 
-        public enum IMAGE_SUBSYSTEM : ushort
-        {
-            /// <summary>An unknown subsystem</summary>
-            IMAGE_SUBSYSTEM_UNKNOWN = 0,
-
-            /// <summary>Device drivers and native Windows processes</summary>
-            IMAGE_SUBSYSTEM_NATIVE = 1,
-
-            /// <summary>The Windows graphical user interface (GUI) subsystem</summary>
-            IMAGE_SUBSYSTEM_WINDOWS_GUI = 2,
-
-            /// <summary>The Windows character subsystem</summary>
-            IMAGE_SUBSYSTEM_WINDOWS_CUI = 3,
-
-            /// <summary>The Posix character subsystem</summary>
-            IMAGE_SUBSYSTEM_POSIX_CUI = 7,
-
-            /// <summary>Windows CE</summary>
-            IMAGE_SUBSYSTEM_WINDOWS_CE_GUI = 9,
-
-            /// <summary>An Extensible Firmware Interface (EFI) application</summary>
-            IMAGE_SUBSYSTEM_EFI_APPLICATION = 10,
-
-            /// <summary>An EFI driver with boot services</summary>
-            IMAGE_SUBSYSTEM_EFI_BOOT_SERVICE_DRIVER = 11,
-
-            /// <summary>An EFI driver with run‐time services</summary>
-            IMAGE_SUBSYSTEM_EFI_RUNTIME_DRIVER = 12,
-
-            /// <summary>An EFI ROM image</summary>
-            IMAGE_SUBSYSTEM_EFI_ROM = 13,
-
-            /// <summary>XBox</summary>
-            IMAGE_SUBSYSTEM_XBOX = 14,
-        }
-
-        [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        public struct IMAGE_OPTIONAL_HEADER32
-        {
-            public UInt16 Magic;
-            public Byte MajorLinkerVersion;
-            public Byte MinorLinkerVersion;
-            public UInt32 SizeOfCode;
-            public UInt32 SizeOfInitializedData;
-            public UInt32 SizeOfUninitializedData;
-            public UInt32 AddressOfEntryPoint;
-            public UInt32 BaseOfCode;
-            public UInt32 BaseOfData;
-            public UInt32 ImageBase;
-            public UInt32 SectionAlignment;
-            public UInt32 FileAlignment;
-            public UInt16 MajorOperatingSystemVersion;
-            public UInt16 MinorOperatingSystemVersion;
-            public UInt16 MajorImageVersion;
-            public UInt16 MinorImageVersion;
-            public UInt16 MajorSubsystemVersion;
-            public UInt16 MinorSubsystemVersion;
-            public UInt32 Win32VersionValue;
-            public UInt32 SizeOfImage;
-            public UInt32 SizeOfHeaders;
-            public UInt32 CheckSum;
-            public IMAGE_SUBSYSTEM Subsystem;
-            public UInt16 DllCharacteristics;
-            public UInt32 SizeOfStackReserve;
-            public UInt32 SizeOfStackCommit;
-            public UInt32 SizeOfHeapReserve;
-            public UInt32 SizeOfHeapCommit;
-            public UInt32 LoaderFlags;
-            public UInt32 NumberOfRvaAndSizes;
-
-            public IMAGE_DATA_DIRECTORY ExportTable;
-            public IMAGE_DATA_DIRECTORY ImportTable;
-            public IMAGE_DATA_DIRECTORY ResourceTable;
-            public IMAGE_DATA_DIRECTORY ExceptionTable;
-            public IMAGE_DATA_DIRECTORY CertificateTable;
-            public IMAGE_DATA_DIRECTORY BaseRelocationTable;
-            public IMAGE_DATA_DIRECTORY Debug;
-            public IMAGE_DATA_DIRECTORY Architecture;
-            public IMAGE_DATA_DIRECTORY GlobalPtr;
-            public IMAGE_DATA_DIRECTORY TLSTable;
-            public IMAGE_DATA_DIRECTORY LoadConfigTable;
-            public IMAGE_DATA_DIRECTORY BoundImport;
-            public IMAGE_DATA_DIRECTORY IAT;
-            public IMAGE_DATA_DIRECTORY DelayImportDescriptor;
-            public IMAGE_DATA_DIRECTORY CLRRuntimeHeader;
-            public IMAGE_DATA_DIRECTORY Reserved;
-        }
-
-        [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        public struct IMAGE_OPTIONAL_HEADER64
-        {
-            public UInt16 Magic;
-            public Byte MajorLinkerVersion;
-            public Byte MinorLinkerVersion;
-            public UInt32 SizeOfCode;
-            public UInt32 SizeOfInitializedData;
-            public UInt32 SizeOfUninitializedData;
-            public UInt32 AddressOfEntryPoint;
-            public UInt32 BaseOfCode;
-            public UInt64 ImageBase;
-            public UInt32 SectionAlignment;
-            public UInt32 FileAlignment;
-            public UInt16 MajorOperatingSystemVersion;
-            public UInt16 MinorOperatingSystemVersion;
-            public UInt16 MajorImageVersion;
-            public UInt16 MinorImageVersion;
-            public UInt16 MajorSubsystemVersion;
-            public UInt16 MinorSubsystemVersion;
-            public UInt32 Win32VersionValue;
-            public UInt32 SizeOfImage;
-            public UInt32 SizeOfHeaders;
-            public UInt32 CheckSum;
-            public IMAGE_SUBSYSTEM Subsystem;
-            public UInt16 DllCharacteristics;
-            public UInt64 SizeOfStackReserve;
-            public UInt64 SizeOfStackCommit;
-            public UInt64 SizeOfHeapReserve;
-            public UInt64 SizeOfHeapCommit;
-            public UInt32 LoaderFlags;
-            public UInt32 NumberOfRvaAndSizes;
-
-            public IMAGE_DATA_DIRECTORY ExportTable;
-            public IMAGE_DATA_DIRECTORY ImportTable;
-            public IMAGE_DATA_DIRECTORY ResourceTable;
-            public IMAGE_DATA_DIRECTORY ExceptionTable;
-            public IMAGE_DATA_DIRECTORY CertificateTable;
-            public IMAGE_DATA_DIRECTORY BaseRelocationTable;
-            public IMAGE_DATA_DIRECTORY Debug;
-            public IMAGE_DATA_DIRECTORY Architecture;
-            public IMAGE_DATA_DIRECTORY GlobalPtr;
-            public IMAGE_DATA_DIRECTORY TLSTable;
-            public IMAGE_DATA_DIRECTORY LoadConfigTable;
-            public IMAGE_DATA_DIRECTORY BoundImport;
-            public IMAGE_DATA_DIRECTORY IAT;
-            public IMAGE_DATA_DIRECTORY DelayImportDescriptor;
-            public IMAGE_DATA_DIRECTORY CLRRuntimeHeader;
-            public IMAGE_DATA_DIRECTORY Reserved;
-        }
+ 
 
 
         public enum IMAGE_FILE_MACHINE : ushort
@@ -600,12 +463,8 @@ namespace PELib
 
             UInt32 ntHeadersSignature = reader.ReadUInt32();
             FileHeader = FromBinaryReader<IMAGE_FILE_HEADER>(reader);
-            if (Is32BitHeader) {
-                OptionalHeader32 = FromBinaryReader<IMAGE_OPTIONAL_HEADER32>(reader);
-            }
-            else {
-                OptionalHeader64 = FromBinaryReader<IMAGE_OPTIONAL_HEADER64>(reader);
-            }
+
+            OptionalHeader = new OptionalHeader(stream);
 
             ImageSectionHeaders = new IMAGE_SECTION_HEADER[FileHeader.NumberOfSections];
             for (int headerNo = 0; headerNo < ImageSectionHeaders.Length; ++headerNo) {
@@ -682,15 +541,7 @@ namespace PELib
         /// </summary>
         public IMAGE_FILE_HEADER FileHeader { get; private set; }
 
-        /// <summary>
-        /// Gets the optional header
-        /// </summary>
-        public IMAGE_OPTIONAL_HEADER32 OptionalHeader32 { get; private set; }
-
-        /// <summary>
-        /// Gets the optional header
-        /// </summary>
-        public IMAGE_OPTIONAL_HEADER64 OptionalHeader64 { get; private set; }
+        public OptionalHeader OptionalHeader { get; private set; }
 
         public IMAGE_SECTION_HEADER[] ImageSectionHeaders { get; private set; }
 
@@ -711,27 +562,198 @@ namespace PELib
             }
         }
 
-        #region Optional-header-derived
-
-        public UInt64 ImageBase {
-            get { return Is32BitHeader ? OptionalHeader32.ImageBase : OptionalHeader64.ImageBase; }
-        }
-
-        public UInt32 BaseOfCode
-        {
-            get { return Is32BitHeader ? OptionalHeader32.BaseOfCode : OptionalHeader64.BaseOfCode; }
-        }
-
-        public UInt32 AddressOfEntryPoint {
-            get { return Is32BitHeader ? OptionalHeader32.AddressOfEntryPoint : OptionalHeader64.AddressOfEntryPoint; }
-        }
-
-        public IMAGE_SUBSYSTEM Subsystem {
-            get { return Is32BitHeader ? OptionalHeader32.Subsystem : OptionalHeader64.Subsystem; }
-        }
-
-        #endregion
 
         #endregion Properties
+    }
+
+    public class OptionalHeader
+    {
+        public UInt16 Magic { get; set; }
+        public Byte MajorLinkerVersion { get; set; }
+        public Byte MinorLinkerVersion { get; set; }
+        public UInt32 SizeOfCode { get; set; }
+        public UInt32 SizeOfInitializedData { get; set; }
+        public UInt32 SizeOfUninitializedData { get; set; }
+        public UInt32 AddressOfEntryPoint { get; set; }
+        public UInt32 BaseOfCode { get; set; }
+        public UInt32 BaseOfData { get; set; }
+        public UInt64 ImageBase { get; set; }
+        public UInt32 SectionAlignment { get; set; }
+        public UInt32 FileAlignment { get; set; }
+        public UInt16 MajorOperatingSystemVersion { get; set; }
+        public UInt16 MinorOperatingSystemVersion { get; set; }
+        public UInt16 MajorImageVersion { get; set; }
+        public UInt16 MinorImageVersion { get; set; }
+        public UInt16 MajorSubsystemVersion { get; set; }
+        public UInt16 MinorSubsystemVersion { get; set; }
+        public UInt32 Win32VersionValue { get; set; }
+        public UInt32 SizeOfImage { get; set; }
+        public UInt32 SizeOfHeaders { get; set; }
+        public UInt32 CheckSum { get; set; }
+        public IMAGE_SUBSYSTEM Subsystem { get; set; }
+        public UInt16 DllCharacteristics { get; set; }
+        public UInt64 SizeOfStackReserve { get; set; }
+        public UInt64 SizeOfStackCommit { get; set; }
+        public UInt64 SizeOfHeapReserve { get; set; }
+        public UInt64 SizeOfHeapCommit { get; set; }
+        public UInt32 LoaderFlags { get; set; }
+        public UInt32 NumberOfRvaAndSizes { get; set; }
+
+        public DataDirectory ExportTable { get; set; }
+        public DataDirectory ImportTable { get; set; }
+        public DataDirectory ResourceTable { get; set; }
+        public DataDirectory ExceptionTable { get; set; }
+        public DataDirectory CertificateTable { get; set; }
+        public DataDirectory BaseRelocationTable { get; set; }
+        public DataDirectory Debug { get; set; }
+        public DataDirectory Architecture { get; set; }
+        public DataDirectory GlobalPtr { get; set; }
+        public DataDirectory TLSTable { get; set; }
+        public DataDirectory LoadConfigTable { get; set; }
+        public DataDirectory BoundImport { get; set; }
+        public DataDirectory IAT { get; set; }
+        public DataDirectory DelayImportDescriptor { get; set; }
+        public DataDirectory CLRRuntimeHeader { get; set; }
+        public DataDirectory Reserved { get; set; }
+
+        public const int PE32Magic = 0x10b;
+        public const int PE32PlusMagic = 0x20b;
+
+        public OptionalHeader(Stream stream) {
+            var br = new BinaryReader(stream);
+
+            Magic = br.ReadUInt16();
+
+            bool is64bit = false;
+            switch (Magic) {
+                case PE32Magic:
+                    break;
+                case PE32PlusMagic:
+                    is64bit = true;
+                    break;
+                default:
+                    throw new Exception(String.Format("Invalid PE32 Optional Header magic value (0x{0:X})", Magic));
+            }
+
+            // TODO: Make sure no read goes past SizeOfOptionalHeader (pain-in-the-ass bucket)
+
+            MajorLinkerVersion = br.ReadByte();
+            MinorLinkerVersion = br.ReadByte();
+            SizeOfCode = br.ReadUInt32();
+            SizeOfInitializedData = br.ReadUInt32();
+            SizeOfUninitializedData = br.ReadUInt32();
+            AddressOfEntryPoint = br.ReadUInt32();
+            BaseOfCode = br.ReadUInt32();
+            if (!is64bit)
+                BaseOfData = br.ReadUInt32();
+            ImageBase = is64bit ? br.ReadUInt64() : br.ReadUInt32();
+            SectionAlignment = br.ReadUInt32();
+            FileAlignment = br.ReadUInt32();
+            MajorOperatingSystemVersion = br.ReadUInt16();
+            MinorOperatingSystemVersion = br.ReadUInt16();
+            MajorImageVersion = br.ReadUInt16();
+            MinorImageVersion = br.ReadUInt16();
+            MajorSubsystemVersion = br.ReadUInt16();
+            MinorSubsystemVersion = br.ReadUInt16();
+            Win32VersionValue = br.ReadUInt32();
+            SizeOfImage = br.ReadUInt32();
+            SizeOfHeaders = br.ReadUInt32();
+            CheckSum = br.ReadUInt32();
+            Subsystem = (IMAGE_SUBSYSTEM)br.ReadUInt16();
+            DllCharacteristics = br.ReadUInt16();
+            SizeOfStackReserve = is64bit ? br.ReadUInt64() : br.ReadUInt32();
+            SizeOfStackCommit = is64bit ? br.ReadUInt64() : br.ReadUInt32();
+            SizeOfHeapReserve = is64bit ? br.ReadUInt64() : br.ReadUInt32();
+            SizeOfHeapCommit = is64bit ? br.ReadUInt64() : br.ReadUInt32();
+            LoaderFlags = br.ReadUInt32();
+            NumberOfRvaAndSizes = br.ReadUInt32();
+
+
+            if (NumberOfRvaAndSizes >= 1)
+                ExportTable  = new DataDirectory(stream);
+            if (NumberOfRvaAndSizes >= 2)
+                ImportTable  = new DataDirectory(stream);
+            if (NumberOfRvaAndSizes >= 3)
+                ResourceTable  = new DataDirectory(stream);
+            if (NumberOfRvaAndSizes >= 4)
+                ExceptionTable  = new DataDirectory(stream);
+            if (NumberOfRvaAndSizes >= 5)
+                CertificateTable  = new DataDirectory(stream);
+            if (NumberOfRvaAndSizes >= 6)
+                BaseRelocationTable  = new DataDirectory(stream);
+            if (NumberOfRvaAndSizes >= 7)
+                Debug  = new DataDirectory(stream);
+            if (NumberOfRvaAndSizes >= 8)
+                Architecture  = new DataDirectory(stream);
+            if (NumberOfRvaAndSizes >= 9)
+                GlobalPtr  = new DataDirectory(stream);
+            if (NumberOfRvaAndSizes >= 10)
+                TLSTable  = new DataDirectory(stream);
+            if (NumberOfRvaAndSizes >= 11)
+                LoadConfigTable  = new DataDirectory(stream);
+            if (NumberOfRvaAndSizes >= 12)
+                BoundImport  = new DataDirectory(stream);
+            if (NumberOfRvaAndSizes >= 13)
+                IAT  = new DataDirectory(stream);
+            if (NumberOfRvaAndSizes >= 14)
+                DelayImportDescriptor  = new DataDirectory(stream);
+            if (NumberOfRvaAndSizes >= 15)
+                CLRRuntimeHeader  = new DataDirectory(stream);
+            if (NumberOfRvaAndSizes >= 16)
+                Reserved  = new DataDirectory(stream);
+        }
+    }
+
+    /// <summary>
+    /// IMAGE_DATA_DIRECTORY
+    /// </summary>
+    public class DataDirectory
+    {
+        public UInt32 VirtualAddress { get; set; }
+        public UInt32 Size { get; set; }
+
+        public DataDirectory(Stream stream) {
+            var br = new BinaryReader(stream);
+
+            VirtualAddress = br.ReadUInt32();
+            Size = br.ReadUInt32();
+        }
+    }
+
+
+    public enum IMAGE_SUBSYSTEM : ushort
+    {
+        /// <summary>An unknown subsystem</summary>
+        IMAGE_SUBSYSTEM_UNKNOWN = 0,
+
+        /// <summary>Device drivers and native Windows processes</summary>
+        IMAGE_SUBSYSTEM_NATIVE = 1,
+
+        /// <summary>The Windows graphical user interface (GUI) subsystem</summary>
+        IMAGE_SUBSYSTEM_WINDOWS_GUI = 2,
+
+        /// <summary>The Windows character subsystem</summary>
+        IMAGE_SUBSYSTEM_WINDOWS_CUI = 3,
+
+        /// <summary>The Posix character subsystem</summary>
+        IMAGE_SUBSYSTEM_POSIX_CUI = 7,
+
+        /// <summary>Windows CE</summary>
+        IMAGE_SUBSYSTEM_WINDOWS_CE_GUI = 9,
+
+        /// <summary>An Extensible Firmware Interface (EFI) application</summary>
+        IMAGE_SUBSYSTEM_EFI_APPLICATION = 10,
+
+        /// <summary>An EFI driver with boot services</summary>
+        IMAGE_SUBSYSTEM_EFI_BOOT_SERVICE_DRIVER = 11,
+
+        /// <summary>An EFI driver with run‐time services</summary>
+        IMAGE_SUBSYSTEM_EFI_RUNTIME_DRIVER = 12,
+
+        /// <summary>An EFI ROM image</summary>
+        IMAGE_SUBSYSTEM_EFI_ROM = 13,
+
+        /// <summary>XBox</summary>
+        IMAGE_SUBSYSTEM_XBOX = 14,
     }
 }
