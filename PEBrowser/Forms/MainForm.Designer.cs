@@ -27,7 +27,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFileOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,10 +45,10 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageHeaders = new System.Windows.Forms.TabPage();
-            this.peHeaderControl = new PEBrowser.Controls.PEHeaderControl();
             this.tabPageDataDirectories = new System.Windows.Forms.TabPage();
-            this.peDataDirectoriesControl = new PEBrowser.Controls.PEDataDirectoriesControl();
             this.tabPageSections = new System.Windows.Forms.TabPage();
+            this.peHeaderControl = new PEBrowser.Controls.PEHeaderControl();
+            this.peDataDirectoriesControl = new PEBrowser.Controls.PEDataDirectoriesControl();
             this.peSectionHeadersControl = new PEBrowser.Controls.PESectionHeadersControl();
             this.logBox = new PEBrowser.Controls.LogBox();
             this.menuStrip1.SuspendLayout();
@@ -90,34 +89,37 @@
             // 
             // mnuFileOpen
             // 
+            this.mnuFileOpen.Image = global::PEBrowser.Properties.Resources.OpenIcon;
             this.mnuFileOpen.Name = "mnuFileOpen";
-            this.mnuFileOpen.Size = new System.Drawing.Size(133, 22);
+            this.mnuFileOpen.Size = new System.Drawing.Size(152, 22);
             this.mnuFileOpen.Text = "&Open File...";
             this.mnuFileOpen.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // mnuFileReload
             // 
+            this.mnuFileReload.Image = global::PEBrowser.Properties.Resources.RefreshIcon;
             this.mnuFileReload.Name = "mnuFileReload";
-            this.mnuFileReload.Size = new System.Drawing.Size(133, 22);
+            this.mnuFileReload.Size = new System.Drawing.Size(152, 22);
             this.mnuFileReload.Text = "Re&load File";
             this.mnuFileReload.Click += new System.EventHandler(this.reloadFileToolStripMenuItem_Click);
             // 
             // mnuFileClose
             // 
+            this.mnuFileClose.Image = global::PEBrowser.Properties.Resources.DeleteIcon;
             this.mnuFileClose.Name = "mnuFileClose";
-            this.mnuFileClose.Size = new System.Drawing.Size(133, 22);
+            this.mnuFileClose.Size = new System.Drawing.Size(152, 22);
             this.mnuFileClose.Text = "&Close File";
             this.mnuFileClose.Click += new System.EventHandler(this.closeFileToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -154,7 +156,7 @@
             // tsbOpen
             // 
             this.tsbOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbOpen.Image = ((System.Drawing.Image)(resources.GetObject("tsbOpen.Image")));
+            this.tsbOpen.Image = global::PEBrowser.Properties.Resources.OpenIcon;
             this.tsbOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbOpen.Name = "tsbOpen";
             this.tsbOpen.Size = new System.Drawing.Size(23, 22);
@@ -164,7 +166,7 @@
             // tsbReload
             // 
             this.tsbReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbReload.Image = ((System.Drawing.Image)(resources.GetObject("tsbReload.Image")));
+            this.tsbReload.Image = global::PEBrowser.Properties.Resources.RefreshIcon;
             this.tsbReload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbReload.Name = "tsbReload";
             this.tsbReload.Size = new System.Drawing.Size(23, 22);
@@ -174,7 +176,7 @@
             // tsbClose
             // 
             this.tsbClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbClose.Image = ((System.Drawing.Image)(resources.GetObject("tsbClose.Image")));
+            this.tsbClose.Image = global::PEBrowser.Properties.Resources.DeleteIcon;
             this.tsbClose.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbClose.Name = "tsbClose";
             this.tsbClose.Size = new System.Drawing.Size(23, 22);
@@ -230,16 +232,6 @@
             this.tabPageHeaders.Text = "Headers";
             this.tabPageHeaders.UseVisualStyleBackColor = true;
             // 
-            // peHeaderControl
-            // 
-            this.peHeaderControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.peHeaderControl.Location = new System.Drawing.Point(3, 3);
-            this.peHeaderControl.MinimumSize = new System.Drawing.Size(660, 460);
-            this.peHeaderControl.Name = "peHeaderControl";
-            this.peHeaderControl.PEFile = null;
-            this.peHeaderControl.Size = new System.Drawing.Size(795, 460);
-            this.peHeaderControl.TabIndex = 0;
-            // 
             // tabPageDataDirectories
             // 
             this.tabPageDataDirectories.Controls.Add(this.peDataDirectoriesControl);
@@ -251,15 +243,6 @@
             this.tabPageDataDirectories.Text = "Data Directories";
             this.tabPageDataDirectories.UseVisualStyleBackColor = true;
             // 
-            // peDataDirectoriesControl
-            // 
-            this.peDataDirectoriesControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.peDataDirectoriesControl.Location = new System.Drawing.Point(3, 3);
-            this.peDataDirectoriesControl.Name = "peDataDirectoriesControl";
-            this.peDataDirectoriesControl.PEFile = null;
-            this.peDataDirectoriesControl.Size = new System.Drawing.Size(795, 460);
-            this.peDataDirectoriesControl.TabIndex = 0;
-            // 
             // tabPageSections
             // 
             this.tabPageSections.Controls.Add(this.peSectionHeadersControl);
@@ -270,7 +253,26 @@
             this.tabPageSections.Text = "Sections";
             this.tabPageSections.UseVisualStyleBackColor = true;
             // 
-            // peSectionHeadersControl1
+            // peHeaderControl
+            // 
+            this.peHeaderControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.peHeaderControl.Location = new System.Drawing.Point(3, 3);
+            this.peHeaderControl.MinimumSize = new System.Drawing.Size(660, 460);
+            this.peHeaderControl.Name = "peHeaderControl";
+            this.peHeaderControl.PEFile = null;
+            this.peHeaderControl.Size = new System.Drawing.Size(795, 460);
+            this.peHeaderControl.TabIndex = 0;
+            // 
+            // peDataDirectoriesControl
+            // 
+            this.peDataDirectoriesControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.peDataDirectoriesControl.Location = new System.Drawing.Point(3, 3);
+            this.peDataDirectoriesControl.Name = "peDataDirectoriesControl";
+            this.peDataDirectoriesControl.PEFile = null;
+            this.peDataDirectoriesControl.Size = new System.Drawing.Size(795, 460);
+            this.peDataDirectoriesControl.TabIndex = 0;
+            // 
+            // peSectionHeadersControl
             // 
             this.peSectionHeadersControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.peSectionHeadersControl.Location = new System.Drawing.Point(0, 0);

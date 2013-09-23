@@ -54,7 +54,7 @@ namespace PEBrowser.Controls
             dgvSections.Columns.Add("chars", "Characteristics");
             dgvSections.Columns["chars"].CellTemplate = new HexCell();
 
-            dgvSections.Columns.Add("pdirs", "Pointing Directories");
+            //dgvSections.Columns.Add("pdirs", "Pointing Directories");
         }
 
         private void PopulateSections()
