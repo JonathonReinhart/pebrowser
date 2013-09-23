@@ -30,9 +30,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reloadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFileOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFileReload = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFileClose = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuView = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,9 +46,9 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageHeaders = new System.Windows.Forms.TabPage();
-            this.peHeaderControl = new PEBrowser.Controls.PEHeaderControl();
             this.tabPageDataDirectories = new System.Windows.Forms.TabPage();
             this.tabPageSections = new System.Windows.Forms.TabPage();
+            this.peHeaderControl = new PEBrowser.Controls.PEHeaderControl();
             this.logBox = new PEBrowser.Controls.LogBox();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -75,45 +75,45 @@
             // mnuFile
             // 
             this.mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.reloadFileToolStripMenuItem,
-            this.closeFileToolStripMenuItem,
+            this.mnuFileOpen,
+            this.mnuFileReload,
+            this.mnuFileClose,
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
             this.mnuFile.Name = "mnuFile";
             this.mnuFile.Size = new System.Drawing.Size(37, 20);
             this.mnuFile.Text = "&File";
             // 
-            // openToolStripMenuItem
+            // mnuFileOpen
             // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.openToolStripMenuItem.Text = "&Open File...";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            this.mnuFileOpen.Name = "mnuFileOpen";
+            this.mnuFileOpen.Size = new System.Drawing.Size(152, 22);
+            this.mnuFileOpen.Text = "&Open File...";
+            this.mnuFileOpen.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
-            // reloadFileToolStripMenuItem
+            // mnuFileReload
             // 
-            this.reloadFileToolStripMenuItem.Name = "reloadFileToolStripMenuItem";
-            this.reloadFileToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.reloadFileToolStripMenuItem.Text = "Re&load File";
-            this.reloadFileToolStripMenuItem.Click += new System.EventHandler(this.reloadFileToolStripMenuItem_Click);
+            this.mnuFileReload.Name = "mnuFileReload";
+            this.mnuFileReload.Size = new System.Drawing.Size(152, 22);
+            this.mnuFileReload.Text = "Re&load File";
+            this.mnuFileReload.Click += new System.EventHandler(this.reloadFileToolStripMenuItem_Click);
             // 
-            // closeFileToolStripMenuItem
+            // mnuFileClose
             // 
-            this.closeFileToolStripMenuItem.Name = "closeFileToolStripMenuItem";
-            this.closeFileToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.closeFileToolStripMenuItem.Text = "&Close File";
-            this.closeFileToolStripMenuItem.Click += new System.EventHandler(this.closeFileToolStripMenuItem_Click);
+            this.mnuFileClose.Name = "mnuFileClose";
+            this.mnuFileClose.Size = new System.Drawing.Size(152, 22);
+            this.mnuFileClose.Text = "&Close File";
+            this.mnuFileClose.Click += new System.EventHandler(this.closeFileToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -154,7 +154,8 @@
             this.tsbOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbOpen.Name = "tsbOpen";
             this.tsbOpen.Size = new System.Drawing.Size(23, 22);
-            this.tsbOpen.Text = "toolStripButton1";
+            this.tsbOpen.Text = "Open...";
+            this.tsbOpen.Click += new System.EventHandler(this.tsbOpen_Click);
             // 
             // tsbReload
             // 
@@ -163,7 +164,8 @@
             this.tsbReload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbReload.Name = "tsbReload";
             this.tsbReload.Size = new System.Drawing.Size(23, 22);
-            this.tsbReload.Text = "toolStripButton1";
+            this.tsbReload.Text = "Reload";
+            this.tsbReload.Click += new System.EventHandler(this.tsbReload_Click);
             // 
             // tsbClose
             // 
@@ -172,7 +174,8 @@
             this.tsbClose.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbClose.Name = "tsbClose";
             this.tsbClose.Size = new System.Drawing.Size(23, 22);
-            this.tsbClose.Text = "toolStripButton1";
+            this.tsbClose.Text = "Close";
+            this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
             // 
             // statusStrip1
             // 
@@ -223,21 +226,12 @@
             this.tabPageHeaders.Text = "Headers";
             this.tabPageHeaders.UseVisualStyleBackColor = true;
             // 
-            // peHeaderControl
-            // 
-            this.peHeaderControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.peHeaderControl.Location = new System.Drawing.Point(3, 3);
-            this.peHeaderControl.MinimumSize = new System.Drawing.Size(660, 460);
-            this.peHeaderControl.Name = "peHeaderControl";
-            this.peHeaderControl.Size = new System.Drawing.Size(795, 460);
-            this.peHeaderControl.TabIndex = 0;
-            // 
             // tabPageDataDirectories
             // 
             this.tabPageDataDirectories.Location = new System.Drawing.Point(4, 22);
             this.tabPageDataDirectories.Name = "tabPageDataDirectories";
             this.tabPageDataDirectories.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDataDirectories.Size = new System.Drawing.Size(776, 333);
+            this.tabPageDataDirectories.Size = new System.Drawing.Size(801, 466);
             this.tabPageDataDirectories.TabIndex = 1;
             this.tabPageDataDirectories.Text = "Data Directories";
             this.tabPageDataDirectories.UseVisualStyleBackColor = true;
@@ -246,10 +240,19 @@
             // 
             this.tabPageSections.Location = new System.Drawing.Point(4, 22);
             this.tabPageSections.Name = "tabPageSections";
-            this.tabPageSections.Size = new System.Drawing.Size(776, 333);
+            this.tabPageSections.Size = new System.Drawing.Size(801, 466);
             this.tabPageSections.TabIndex = 2;
             this.tabPageSections.Text = "Sections";
             this.tabPageSections.UseVisualStyleBackColor = true;
+            // 
+            // peHeaderControl
+            // 
+            this.peHeaderControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.peHeaderControl.Location = new System.Drawing.Point(3, 3);
+            this.peHeaderControl.MinimumSize = new System.Drawing.Size(660, 460);
+            this.peHeaderControl.Name = "peHeaderControl";
+            this.peHeaderControl.Size = new System.Drawing.Size(795, 460);
+            this.peHeaderControl.TabIndex = 0;
             // 
             // logBox
             // 
@@ -300,9 +303,9 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private Controls.LogBox logBox;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem reloadFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem closeFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuFileOpen;
+        private System.Windows.Forms.ToolStripMenuItem mnuFileReload;
+        private System.Windows.Forms.ToolStripMenuItem mnuFileClose;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl1;

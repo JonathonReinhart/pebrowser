@@ -57,6 +57,24 @@ namespace PEBrowser.Forms
 
         #endregion
 
+        #region Tool Strip
+        private void tsbOpen_Click(object sender, EventArgs e)
+        {
+            ShowOpenFileDialog();
+        }
+
+        private void tsbReload_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tsbClose_Click(object sender, EventArgs e)
+        {
+            CloseFile();
+        }
+
+        #endregion
+
 
         #region Opening Files
 
@@ -86,6 +104,8 @@ namespace PEBrowser.Forms
         }
 
         private void OpenFile(string path) {
+            CloseFile();
+
             LogLineFormat("Open File: {0}", path);
 
             m_pe = OpenPEFile.Open(path);
@@ -97,9 +117,13 @@ namespace PEBrowser.Forms
             LogLineFormat("File size: 0x{0:X} ({0})", m_pe.FileSize);
 
             peHeaderControl.FileOpened(m_pe);
+
+            UpdateGuiState();
         }
 
         private void CloseFile() {
+            if (m_pe == null) return;
+
             m_pe.Dispose();
             m_pe = null;
 
@@ -108,9 +132,20 @@ namespace PEBrowser.Forms
 
         private void OnFileClosed() {
             LogLine("File closed.");
+
+            UpdateGuiState();
+        }
+
+        private void UpdateGuiState() {
+            mnuFileClose.Enabled = m_pe != null;
+            tsbClose.Enabled = m_pe != null;
         }
 
         #endregion
+
+
+
+        
     }
 
 
