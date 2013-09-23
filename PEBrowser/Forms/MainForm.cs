@@ -1,11 +1,15 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using PELib;
 
 namespace PEBrowser.Forms
 {
     public partial class MainForm : Form
     {
+        private OpenPEFile m_pe;
+
         public MainForm()
         {
             InitializeComponent();
@@ -40,7 +44,7 @@ namespace PEBrowser.Forms
 
         private void closeFileToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
-
+            CloseFile();
         }
 
         private void exitToolStripMenuItem_Click(object sender, System.EventArgs e)
@@ -84,15 +88,31 @@ namespace PEBrowser.Forms
         private void OpenFile(string path) {
             LogLineFormat("Open File: {0}", path);
 
-            var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
+            m_pe = OpenPEFile.Open(path);
+      
+            OnFileOpened();
+        }
 
-            LogLineFormat("File size: 0x{0:X} ({0})", stream.Length);
+        private void OnFileOpened() {
+            LogLineFormat("File size: 0x{0:X} ({0})", m_pe.FileSize);
 
-            var pe = new PELib.PeFile(stream);
+            peHeaderControl.FileOpened(m_pe);
+        }
 
+        private void CloseFile() {
+            m_pe.Dispose();
+            m_pe = null;
 
+            OnFileClosed();
+        }
+
+        private void OnFileClosed() {
+            LogLine("File closed.");
         }
 
         #endregion
     }
+
+
+
 }
