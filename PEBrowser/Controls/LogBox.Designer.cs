@@ -43,7 +43,6 @@
             this.textBoxLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textBoxLog.Size = new System.Drawing.Size(513, 140);
             this.textBoxLog.TabIndex = 0;
-            this.textBoxLog.Text = "This is a trick";
             // 
             // LogBox
             // 
