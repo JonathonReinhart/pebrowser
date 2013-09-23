@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace PEBrowser.Forms
@@ -9,9 +10,7 @@ namespace PEBrowser.Forms
         {
             InitializeComponent();
 
-            LogLine("Started up!");
-            LogLine("Still going");
-            LogLineFormat("We've done {0} messages now!", 3);
+            LogLine("Started up.");
         }
 
         #region Logging
@@ -58,7 +57,10 @@ namespace PEBrowser.Forms
         #region Opening Files
 
         private void ShowOpenFileDialog() {
-            var dialog = new OpenFileDialog();
+            var dialog = new OpenFileDialog {
+                Multiselect = false, 
+                CheckFileExists = true
+            };
 
             var filter = new FileDialogFilterBuilder();
             filter.AddExtension("Executable Files", "exe");
@@ -71,10 +73,24 @@ namespace PEBrowser.Forms
             filter.AddExtension("Borland Library", "dpl", "bpl");
             filter.AddExtension("Screen Savers", "scr");
             filter.AddExtension("Multilingual User Interface Pack", "mui");
-
             dialog.Filter = filter.Filter;
 
             var result = dialog.ShowDialog();
+            if (result != DialogResult.OK) return;
+            
+            OpenFile(dialog.FileName);
+        }
+
+        private void OpenFile(string path) {
+            LogLineFormat("Open File: {0}", path);
+
+            var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
+
+            LogLineFormat("File size: 0x{0:X} ({0})", stream.Length);
+
+            var pe = new PELib.PeFile(stream);
+
+
         }
 
         #endregion
