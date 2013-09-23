@@ -63,9 +63,21 @@ namespace PEBrowser.Controls
 
             if (PEFile == null) return;
 
+            var oh = PEFile.PE.OptionalHeader;
+
             foreach (var s in PEFile.PE.ImageSectionHeaders) {
-                dgvSections.Rows.Add(s.Name, s.VirtualAddress, s.VirtualSize, s.SizeOfRawData,
-                                     s.PointerToRawData, s.Characteristics);
+                
+
+                var va = s.VirtualAddress + PEFile.PE.OptionalHeader.ImageBase;
+
+                object objva;
+                if (oh.IsPE32Plus)      // Don't replace with ?:
+                    objva = va;
+                else
+                    objva = (UInt32)va;
+
+                dgvSections.Rows.Add(s.Name, objva, s.VirtualSize,
+                    s.SizeOfRawData, s.PointerToRawData, (UInt32)s.Characteristics);
             }
         }
     }
