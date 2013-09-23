@@ -39,6 +39,11 @@
             this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reloadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logBox = new PEBrowser.Controls.LogBox();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -61,6 +66,12 @@
             // 
             // mnuFile
             // 
+            this.mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.reloadFileToolStripMenuItem,
+            this.closeFileToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.exitToolStripMenuItem});
             this.mnuFile.Name = "mnuFile";
             this.mnuFile.Size = new System.Drawing.Size(37, 20);
             this.mnuFile.Text = "&File";
@@ -144,6 +155,39 @@
             this.splitContainer1.SplitterDistance = 261;
             this.splitContainer1.TabIndex = 4;
             // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Text = "&Open File...";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // reloadFileToolStripMenuItem
+            // 
+            this.reloadFileToolStripMenuItem.Name = "reloadFileToolStripMenuItem";
+            this.reloadFileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reloadFileToolStripMenuItem.Text = "Re&load File";
+            this.reloadFileToolStripMenuItem.Click += new System.EventHandler(this.reloadFileToolStripMenuItem_Click);
+            // 
+            // closeFileToolStripMenuItem
+            // 
+            this.closeFileToolStripMenuItem.Name = "closeFileToolStripMenuItem";
+            this.closeFileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeFileToolStripMenuItem.Text = "&Close File";
+            this.closeFileToolStripMenuItem.Click += new System.EventHandler(this.closeFileToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // logBox
             // 
             this.logBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -189,6 +233,11 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private Controls.LogBox logBox;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reloadFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 

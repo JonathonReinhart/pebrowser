@@ -50,6 +50,7 @@
     <Compile Include="Controls\LogBox.Designer.cs">
       <DependentUpon>LogBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileDialogFilterBuilder.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
