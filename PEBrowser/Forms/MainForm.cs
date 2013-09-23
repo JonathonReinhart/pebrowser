@@ -18,7 +18,8 @@ namespace PEBrowser.Forms
 
             m_peFileViewers = new List<IPEFileViewer> {
                 peHeaderControl,
-                peDataDirectoriesControl
+                peDataDirectoriesControl,
+                peSectionHeadersControl,
             };
 
             LogLine("Started up.");

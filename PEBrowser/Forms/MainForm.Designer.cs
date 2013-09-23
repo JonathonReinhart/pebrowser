@@ -46,11 +46,12 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageHeaders = new System.Windows.Forms.TabPage();
-            this.tabPageDataDirectories = new System.Windows.Forms.TabPage();
-            this.tabPageSections = new System.Windows.Forms.TabPage();
             this.peHeaderControl = new PEBrowser.Controls.PEHeaderControl();
-            this.logBox = new PEBrowser.Controls.LogBox();
+            this.tabPageDataDirectories = new System.Windows.Forms.TabPage();
             this.peDataDirectoriesControl = new PEBrowser.Controls.PEDataDirectoriesControl();
+            this.tabPageSections = new System.Windows.Forms.TabPage();
+            this.peSectionHeadersControl = new PEBrowser.Controls.PESectionHeadersControl();
+            this.logBox = new PEBrowser.Controls.LogBox();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -59,6 +60,7 @@
             this.tabControl1.SuspendLayout();
             this.tabPageHeaders.SuspendLayout();
             this.tabPageDataDirectories.SuspendLayout();
+            this.tabPageSections.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -228,6 +230,16 @@
             this.tabPageHeaders.Text = "Headers";
             this.tabPageHeaders.UseVisualStyleBackColor = true;
             // 
+            // peHeaderControl
+            // 
+            this.peHeaderControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.peHeaderControl.Location = new System.Drawing.Point(3, 3);
+            this.peHeaderControl.MinimumSize = new System.Drawing.Size(660, 460);
+            this.peHeaderControl.Name = "peHeaderControl";
+            this.peHeaderControl.PEFile = null;
+            this.peHeaderControl.Size = new System.Drawing.Size(795, 460);
+            this.peHeaderControl.TabIndex = 0;
+            // 
             // tabPageDataDirectories
             // 
             this.tabPageDataDirectories.Controls.Add(this.peDataDirectoriesControl);
@@ -239,8 +251,18 @@
             this.tabPageDataDirectories.Text = "Data Directories";
             this.tabPageDataDirectories.UseVisualStyleBackColor = true;
             // 
+            // peDataDirectoriesControl
+            // 
+            this.peDataDirectoriesControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.peDataDirectoriesControl.Location = new System.Drawing.Point(3, 3);
+            this.peDataDirectoriesControl.Name = "peDataDirectoriesControl";
+            this.peDataDirectoriesControl.PEFile = null;
+            this.peDataDirectoriesControl.Size = new System.Drawing.Size(795, 460);
+            this.peDataDirectoriesControl.TabIndex = 0;
+            // 
             // tabPageSections
             // 
+            this.tabPageSections.Controls.Add(this.peSectionHeadersControl);
             this.tabPageSections.Location = new System.Drawing.Point(4, 22);
             this.tabPageSections.Name = "tabPageSections";
             this.tabPageSections.Size = new System.Drawing.Size(801, 466);
@@ -248,15 +270,14 @@
             this.tabPageSections.Text = "Sections";
             this.tabPageSections.UseVisualStyleBackColor = true;
             // 
-            // peHeaderControl
+            // peSectionHeadersControl1
             // 
-            this.peHeaderControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.peHeaderControl.Location = new System.Drawing.Point(3, 3);
-            this.peHeaderControl.MinimumSize = new System.Drawing.Size(660, 460);
-            this.peHeaderControl.Name = "peHeaderControl";
-            this.peHeaderControl.PEFile = null;
-            this.peHeaderControl.Size = new System.Drawing.Size(795, 460);
-            this.peHeaderControl.TabIndex = 0;
+            this.peSectionHeadersControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.peSectionHeadersControl.Location = new System.Drawing.Point(0, 0);
+            this.peSectionHeadersControl.Name = "peSectionHeadersControl";
+            this.peSectionHeadersControl.PEFile = null;
+            this.peSectionHeadersControl.Size = new System.Drawing.Size(801, 466);
+            this.peSectionHeadersControl.TabIndex = 0;
             // 
             // logBox
             // 
@@ -266,15 +287,6 @@
             this.logBox.NewestOnTop = false;
             this.logBox.Size = new System.Drawing.Size(809, 177);
             this.logBox.TabIndex = 0;
-            // 
-            // peDataDirectoriesControl
-            // 
-            this.peDataDirectoriesControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.peDataDirectoriesControl.Location = new System.Drawing.Point(3, 3);
-            this.peDataDirectoriesControl.Name = "peDataDirectoriesControl";
-            this.peDataDirectoriesControl.PEFile = null;
-            this.peDataDirectoriesControl.Size = new System.Drawing.Size(795, 460);
-            this.peDataDirectoriesControl.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -298,6 +310,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPageHeaders.ResumeLayout(false);
             this.tabPageDataDirectories.ResumeLayout(false);
+            this.tabPageSections.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -328,6 +341,7 @@
         private System.Windows.Forms.TabPage tabPageSections;
         private Controls.PEHeaderControl peHeaderControl;
         private Controls.PEDataDirectoriesControl peDataDirectoriesControl;
+        private Controls.PESectionHeadersControl peSectionHeadersControl;
     }
 }
 
