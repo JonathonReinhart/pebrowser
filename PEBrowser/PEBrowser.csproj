@@ -56,6 +56,7 @@
     <Compile Include="Controls\PEHeaderControl.Designer.cs">
       <DependentUpon>PEHeaderControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="FileDialogFilterBuilder.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>

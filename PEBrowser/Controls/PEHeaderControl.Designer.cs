@@ -29,10 +29,10 @@
         {
             this.dgvFileHeader = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
-            this.field = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvOptionalHeader = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFileHeader)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOptionalHeader)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvFileHeader
@@ -41,17 +41,13 @@
             this.dgvFileHeader.AllowUserToDeleteRows = false;
             this.dgvFileHeader.AllowUserToResizeRows = false;
             this.dgvFileHeader.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvFileHeader.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.field,
-            this.value,
-            this.description});
             this.dgvFileHeader.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvFileHeader.Location = new System.Drawing.Point(3, 16);
             this.dgvFileHeader.Name = "dgvFileHeader";
             this.dgvFileHeader.ReadOnly = true;
             this.dgvFileHeader.RowHeadersVisible = false;
             this.dgvFileHeader.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvFileHeader.Size = new System.Drawing.Size(439, 150);
+            this.dgvFileHeader.Size = new System.Drawing.Size(439, 163);
             this.dgvFileHeader.TabIndex = 0;
             // 
             // label1
@@ -63,35 +59,42 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "File Header:";
             // 
-            // field
+            // dgvOptionalHeader
             // 
-            this.field.HeaderText = "Field Name";
-            this.field.Name = "field";
-            this.field.ReadOnly = true;
-            this.field.Width = 120;
+            this.dgvOptionalHeader.AllowUserToAddRows = false;
+            this.dgvOptionalHeader.AllowUserToDeleteRows = false;
+            this.dgvOptionalHeader.AllowUserToResizeRows = false;
+            this.dgvOptionalHeader.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOptionalHeader.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvOptionalHeader.Location = new System.Drawing.Point(3, 197);
+            this.dgvOptionalHeader.Name = "dgvOptionalHeader";
+            this.dgvOptionalHeader.ReadOnly = true;
+            this.dgvOptionalHeader.RowHeadersVisible = false;
+            this.dgvOptionalHeader.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvOptionalHeader.Size = new System.Drawing.Size(439, 150);
+            this.dgvOptionalHeader.TabIndex = 2;
             // 
-            // value
+            // label2
             // 
-            this.value.HeaderText = "Data Value";
-            this.value.Name = "value";
-            this.value.ReadOnly = true;
-            // 
-            // description
-            // 
-            this.description.HeaderText = "Description";
-            this.description.Name = "description";
-            this.description.ReadOnly = true;
-            this.description.Width = 200;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 181);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(87, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Optional Header:";
             // 
             // PEHeaderControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.dgvOptionalHeader);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dgvFileHeader);
             this.Name = "PEHeaderControl";
-            this.Size = new System.Drawing.Size(522, 291);
+            this.Size = new System.Drawing.Size(522, 391);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFileHeader)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOptionalHeader)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -101,8 +104,7 @@
 
         private System.Windows.Forms.DataGridView dgvFileHeader;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn field;
-        private System.Windows.Forms.DataGridViewTextBoxColumn value;
-        private System.Windows.Forms.DataGridViewTextBoxColumn description;
+        private System.Windows.Forms.DataGridView dgvOptionalHeader;
+        private System.Windows.Forms.Label label2;
     }
 }

@@ -566,9 +566,10 @@ namespace PELib
         #endregion Properties
     }
 
+
     public class OptionalHeader
     {
-        public UInt16 Magic { get; set; }
+        public MagicValue Magic { get; set; }
         public Byte MajorLinkerVersion { get; set; }
         public Byte MinorLinkerVersion { get; set; }
         public UInt32 SizeOfCode { get; set; }
@@ -616,20 +617,25 @@ namespace PELib
         public DataDirectory CLRRuntimeHeader { get; set; }
         public DataDirectory Reserved { get; set; }
 
-        public const int PE32Magic = 0x10b;
-        public const int PE32PlusMagic = 0x20b;
+
+        public enum MagicValue : ushort {
+            PE32 = 0x10b,
+            PE32Plus = 0x20b,
+        }
+
+        public bool IsPE32Plus {
+            get { return Magic == MagicValue.PE32Plus; }
+        }
+
 
         public OptionalHeader(Stream stream) {
             var br = new BinaryReader(stream);
 
-            Magic = br.ReadUInt16();
+            Magic = (MagicValue)br.ReadUInt16();
 
-            bool is64bit = false;
             switch (Magic) {
-                case PE32Magic:
-                    break;
-                case PE32PlusMagic:
-                    is64bit = true;
+                case MagicValue.PE32:
+                case MagicValue.PE32Plus:
                     break;
                 default:
                     throw new Exception(String.Format("Invalid PE32 Optional Header magic value (0x{0:X})", Magic));
@@ -644,9 +650,9 @@ namespace PELib
             SizeOfUninitializedData = br.ReadUInt32();
             AddressOfEntryPoint = br.ReadUInt32();
             BaseOfCode = br.ReadUInt32();
-            if (!is64bit)
+            if (!IsPE32Plus)
                 BaseOfData = br.ReadUInt32();
-            ImageBase = is64bit ? br.ReadUInt64() : br.ReadUInt32();
+            ImageBase = IsPE32Plus ? br.ReadUInt64() : br.ReadUInt32();
             SectionAlignment = br.ReadUInt32();
             FileAlignment = br.ReadUInt32();
             MajorOperatingSystemVersion = br.ReadUInt16();
@@ -661,10 +667,10 @@ namespace PELib
             CheckSum = br.ReadUInt32();
             Subsystem = (IMAGE_SUBSYSTEM)br.ReadUInt16();
             DllCharacteristics = br.ReadUInt16();
-            SizeOfStackReserve = is64bit ? br.ReadUInt64() : br.ReadUInt32();
-            SizeOfStackCommit = is64bit ? br.ReadUInt64() : br.ReadUInt32();
-            SizeOfHeapReserve = is64bit ? br.ReadUInt64() : br.ReadUInt32();
-            SizeOfHeapCommit = is64bit ? br.ReadUInt64() : br.ReadUInt32();
+            SizeOfStackReserve = IsPE32Plus ? br.ReadUInt64() : br.ReadUInt32();
+            SizeOfStackCommit = IsPE32Plus ? br.ReadUInt64() : br.ReadUInt32();
+            SizeOfHeapReserve = IsPE32Plus ? br.ReadUInt64() : br.ReadUInt32();
+            SizeOfHeapCommit = IsPE32Plus ? br.ReadUInt64() : br.ReadUInt32();
             LoaderFlags = br.ReadUInt32();
             NumberOfRvaAndSizes = br.ReadUInt32();
 
