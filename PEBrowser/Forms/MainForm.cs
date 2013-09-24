@@ -92,7 +92,7 @@ namespace PEBrowser.Forms
                 CheckFileExists = true
             };
 
-            var filter = new FileDialogFilterBuilder();
+            var filter = new FileDialogFilterBuilder { AllTypesName = "PE Files"};
             filter.AddExtension("Executable Files", "exe");
             filter.AddExtension("Library Files", "dll");
             filter.AddExtension("Drivers", "sys");

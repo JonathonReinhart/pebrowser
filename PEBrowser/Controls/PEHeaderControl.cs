@@ -67,7 +67,7 @@ namespace PEBrowser.Controls
 
             var fh = PEFile.PE.FileHeader;
 
-            if (Enum.IsDefined(typeof (PeFile.IMAGE_FILE_MACHINE), fh.Machine))
+            if (Enum.IsDefined(typeof (IMAGE_FILE_MACHINE), fh.Machine))
                 dgvFileHeader.Rows.Add("Machine", (UInt16)fh.Machine, fh.Machine);
             else
                 dgvFileHeader.Rows.Add("Machine", (UInt16)fh.Machine);
@@ -76,7 +76,7 @@ namespace PEBrowser.Controls
             dgvFileHeader.Rows.Add("Pointer to Symbol Table", fh.PointerToSymbolTable);
             dgvFileHeader.Rows.Add("Number of Symbols", fh.NumberOfSymbols);
             dgvFileHeader.Rows.Add("Size of Optional Header", fh.SizeOfOptionalHeader);
-            dgvFileHeader.Rows.Add("Size of Optional Header", fh.Characteristics);
+            dgvFileHeader.Rows.Add("Characteristics", fh.Characteristics);
         }
 
 

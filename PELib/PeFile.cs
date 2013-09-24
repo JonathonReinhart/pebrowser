@@ -124,87 +124,6 @@ namespace PELib
             public UInt32 Size;
         }
 
- 
-
-
-        public enum IMAGE_FILE_MACHINE : ushort
-        {
-            /// <summary>The contents of this field are assumed to be applicable to any machine type</summary>
-            IMAGE_FILE_MACHINE_UNKNOWN      = 0x0,
-
-            /// <summary>Matsushita AM33</summary>
-            IMAGE_FILE_MACHINE_AM33         = 0x1d3,
-
-            /// <summary>x64</summary>
-            IMAGE_FILE_MACHINE_AMD64        = 0x8664,
-
-            /// <summary>ARM little endian</summary>
-            IMAGE_FILE_MACHINE_ARM          = 0x1c0,
-
-            /// <summary>ARMv7 (or higher) Thumb mode only</summary>
-            IMAGE_FILE_MACHINE_ARMV7        = 0x1c4,
-
-            /// <summary>EFI byte code</summary>
-            IMAGE_FILE_MACHINE_EBC          = 0xebc,
-
-            /// <summary>Intel 386 or later processors and compatible processors</summary>
-            IMAGE_FILE_MACHINE_I386         = 0x14c,
-
-            /// <summary>Intel Itanium processor family</summary>
-            IMAGE_FILE_MACHINE_IA64         = 0x200,
-
-            /// <summary>Mitsubishi M32R little endian</summary>
-            IMAGE_FILE_MACHINE_M32R         = 0x9041,
-
-            /// <summary>MIPS16</summary>
-            IMAGE_FILE_MACHINE_MIPS16       = 0x266,
-
-            /// <summary>MIPS with FPU</summary>
-            IMAGE_FILE_MACHINE_MIPSFPU      = 0x366,
-
-            /// <summary>MIPS16 with FPU</summary>
-            IMAGE_FILE_MACHINE_MIPSFPU16    = 0x466,
-
-            /// <summary>Power PC little endian</summary>
-            IMAGE_FILE_MACHINE_POWERPC      = 0x1f0,
-
-            /// <summary>Power PC with floating point support</summary>
-            IMAGE_FILE_MACHINE_POWERPCFP    = 0x1f1,
-
-            /// <summary>MIPS little endian</summary>
-            IMAGE_FILE_MACHINE_R4000        = 0x166,
-
-            /// <summary>Hitachi SH3</summary>
-            IMAGE_FILE_MACHINE_SH3          = 0x1a2,
-
-            /// <summary>Hitachi SH3 DSP</summary>
-            IMAGE_FILE_MACHINE_SH3DSP       = 0x1a3,
-
-            /// <summary>Hitachi SH4</summary>
-            IMAGE_FILE_MACHINE_SH4          = 0x1a6,
-
-            /// <summary>Hitachi SH5</summary>
-            IMAGE_FILE_MACHINE_SH5          = 0x1a8,
-
-            /// <summary>ARM or Thumb (“interworking”)</summary>
-            IMAGE_FILE_MACHINE_THUMB        = 0x1c2,
-
-            /// <summary>MIPS little‐endian WCE v2</summary>
-            IMAGE_FILE_MACHINE_WCEMIPSV2    = 0x169,
-
-        }
-
-        [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        public struct IMAGE_FILE_HEADER
-        {
-            public IMAGE_FILE_MACHINE Machine;
-            public UInt16 NumberOfSections;
-            public UInt32 TimeDateStamp;
-            public UInt32 PointerToSymbolTable;
-            public UInt32 NumberOfSymbols;
-            public UInt16 SizeOfOptionalHeader;
-            public UInt16 Characteristics;
-        }
 
 
         #endregion File Header Structures
@@ -229,7 +148,7 @@ namespace PELib
             stream.Seek(zeroOffset + DosHeader.e_lfanew, SeekOrigin.Begin);
 
             UInt32 ntHeadersSignature = reader.ReadUInt32();
-            FileHeader = FromBinaryReader<IMAGE_FILE_HEADER>(reader);
+            FileHeader = new FileHeader(stream);
 
             OptionalHeader = new OptionalHeader(stream);
 
@@ -301,10 +220,7 @@ namespace PELib
         /// </summary>
         public IMAGE_DOS_HEADER DosHeader { get; private set; }
 
-        /// <summary>
-        /// Gets the file header
-        /// </summary>
-        public IMAGE_FILE_HEADER FileHeader { get; private set; }
+        public FileHeader FileHeader { get; private set; }
 
         public OptionalHeader OptionalHeader { get; private set; }
 
@@ -331,6 +247,30 @@ namespace PELib
 
         #endregion Properties
     }
+
+    public class FileHeader
+    {
+        public IMAGE_FILE_MACHINE Machine { get; set; }
+        public UInt16 NumberOfSections { get; set; }
+        public UInt32 TimeDateStamp { get; set; }
+        public UInt32 PointerToSymbolTable { get; set; }
+        public UInt32 NumberOfSymbols { get; set; }
+        public UInt16 SizeOfOptionalHeader { get; set; }
+        public UInt16 Characteristics { get; set; }
+
+        public FileHeader(Stream stream) {
+            var br = new BinaryReader(stream);
+            
+            Machine = (IMAGE_FILE_MACHINE)br.ReadUInt16();
+            NumberOfSections = br.ReadUInt16();
+            TimeDateStamp = br.ReadUInt32();
+            PointerToSymbolTable = br.ReadUInt32();
+            NumberOfSymbols = br.ReadUInt32();
+            SizeOfOptionalHeader = br.ReadUInt16();
+            Characteristics = br.ReadUInt16();
+        }
+    }
+
 
 
     public class OptionalHeader
@@ -773,4 +713,76 @@ namespace PELib
         /// </summary>
         MemoryWrite = 0x80000000
     }
+
+
+
+
+    public enum IMAGE_FILE_MACHINE : ushort
+    {
+        /// <summary>The contents of this field are assumed to be applicable to any machine type</summary>
+        IMAGE_FILE_MACHINE_UNKNOWN = 0x0,
+
+        /// <summary>Matsushita AM33</summary>
+        IMAGE_FILE_MACHINE_AM33 = 0x1d3,
+
+        /// <summary>x64</summary>
+        IMAGE_FILE_MACHINE_AMD64 = 0x8664,
+
+        /// <summary>ARM little endian</summary>
+        IMAGE_FILE_MACHINE_ARM = 0x1c0,
+
+        /// <summary>ARMv7 (or higher) Thumb mode only</summary>
+        IMAGE_FILE_MACHINE_ARMV7 = 0x1c4,
+
+        /// <summary>EFI byte code</summary>
+        IMAGE_FILE_MACHINE_EBC = 0xebc,
+
+        /// <summary>Intel 386 or later processors and compatible processors</summary>
+        IMAGE_FILE_MACHINE_I386 = 0x14c,
+
+        /// <summary>Intel Itanium processor family</summary>
+        IMAGE_FILE_MACHINE_IA64 = 0x200,
+
+        /// <summary>Mitsubishi M32R little endian</summary>
+        IMAGE_FILE_MACHINE_M32R = 0x9041,
+
+        /// <summary>MIPS16</summary>
+        IMAGE_FILE_MACHINE_MIPS16 = 0x266,
+
+        /// <summary>MIPS with FPU</summary>
+        IMAGE_FILE_MACHINE_MIPSFPU = 0x366,
+
+        /// <summary>MIPS16 with FPU</summary>
+        IMAGE_FILE_MACHINE_MIPSFPU16 = 0x466,
+
+        /// <summary>Power PC little endian</summary>
+        IMAGE_FILE_MACHINE_POWERPC = 0x1f0,
+
+        /// <summary>Power PC with floating point support</summary>
+        IMAGE_FILE_MACHINE_POWERPCFP = 0x1f1,
+
+        /// <summary>MIPS little endian</summary>
+        IMAGE_FILE_MACHINE_R4000 = 0x166,
+
+        /// <summary>Hitachi SH3</summary>
+        IMAGE_FILE_MACHINE_SH3 = 0x1a2,
+
+        /// <summary>Hitachi SH3 DSP</summary>
+        IMAGE_FILE_MACHINE_SH3DSP = 0x1a3,
+
+        /// <summary>Hitachi SH4</summary>
+        IMAGE_FILE_MACHINE_SH4 = 0x1a6,
+
+        /// <summary>Hitachi SH5</summary>
+        IMAGE_FILE_MACHINE_SH5 = 0x1a8,
+
+        /// <summary>ARM or Thumb (“interworking”)</summary>
+        IMAGE_FILE_MACHINE_THUMB = 0x1c2,
+
+        /// <summary>MIPS little‐endian WCE v2</summary>
+        IMAGE_FILE_MACHINE_WCEMIPSV2 = 0x169,
+
+    }
+
+
 }
