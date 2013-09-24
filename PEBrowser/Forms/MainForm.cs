@@ -7,7 +7,7 @@ using PELib;
 
 namespace PEBrowser.Forms
 {
-    public partial class MainForm : Form
+    internal partial class MainForm : Form
     {
         private OpenPEFile m_pe;
         private readonly IEnumerable<IPEFileViewer> m_peFileViewers;
@@ -123,6 +123,12 @@ namespace PEBrowser.Forms
 
         private void OnFileOpened() {
             LogLineFormat("File size: 0x{0:X} ({0})", m_pe.FileSize);
+
+            uint extraLength;
+            uint extraStart;
+            if (PEHelper.DetectExtraData(m_pe, out extraStart, out extraLength)) {
+                LogLineFormat("EOF Extra Data: @ 0x{0:X}  (0x{1:X} bytes)", extraStart, extraLength);
+            }
 
             UpdateGuiState();
         }

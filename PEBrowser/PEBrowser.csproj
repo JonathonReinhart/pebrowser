@@ -77,7 +77,9 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces.cs" />
+    <Compile Include="LogSink.cs" />
     <Compile Include="OpenPEFile.cs" />
+    <Compile Include="PEHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\LogBox.resx">
