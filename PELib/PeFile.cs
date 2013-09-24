@@ -46,21 +46,8 @@ namespace PELib
                 stream.Seek(idir_fo, SeekOrigin.Begin);
 
                 while (true) {
-                    var dir = new ImportDirectoryTable(stream);
-                    if (dir.IsNull) break;
-
-                    var pos = stream.Position;
-
-                    var name = stream.ReadNullTerminatedString(dir.NameRva, Encoding.ASCII);
-
-
-                    stream.Position = dir.ImportLookupTableRva;
-                    var table = new ImportLookupTable(stream, OptionalHeader.IsPE32Plus);
-
-
-
-
-                    stream.Position = pos;
+                    var imp = ImportDirectory.Read(stream, OptionalHeader.IsPE32Plus);
+                    if (imp == null) break;
                 }
 
             }
@@ -140,8 +127,41 @@ namespace PELib
         private readonly List<SectionHeader> m_sectionHeaders = new List<SectionHeader>();
         public IEnumerable<SectionHeader> ImageSectionHeaders { get { return m_sectionHeaders; } }
 
+
         #endregion Properties
     }
+
+
+
+    public class ImportDirectory
+    {
+        public string Name { get; private set; }
+        public ImportLookupTable ImportLookupTable { get; private set; }
+
+        private ImportDirectory() {}
+
+        public static ImportDirectory Read(Stream stream, bool isPe32Plus) {
+            var dir = new ImportDirectoryTable(stream);
+            if (dir.IsNull) return null;
+
+            var pos = stream.Position;
+
+            try {
+                var result = new ImportDirectory();
+
+                result.Name = stream.ReadNullTerminatedString(dir.NameRva, Encoding.ASCII);
+
+                stream.Position = dir.ImportLookupTableRva;
+                result.ImportLookupTable = new ImportLookupTable(stream, isPe32Plus);
+
+                return result;
+            }
+            finally {
+                stream.Position = pos;
+            }
+        }
+    }
+
 
 
 
@@ -243,18 +263,7 @@ namespace PELib
         }
     }
 
-    /*
-    public class ImportLookupTableEntry
-    {
-        private UInt32 m_value;
 
-        public bool UseOrdinal { get; private set; }
-
-        public ImportLookupTableEntry(bool useOrdinal) {
-            UseOrdinal = useOrdinal;
-        }
-    }
-    */
 
 
  
