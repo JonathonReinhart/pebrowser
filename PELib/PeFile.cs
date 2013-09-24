@@ -26,13 +26,11 @@ namespace PELib
         }
 
         public PeFile(Stream stream) {
-            var zeroOffset = stream.Position;
-
             var reader = new BinaryReader(stream, Encoding.ASCII);
             DosHeader = FromBinaryReader<IMAGE_DOS_HEADER>(reader);
 
             // Add 4 bytes to the offset
-            stream.Seek(zeroOffset + DosHeader.e_lfanew, SeekOrigin.Begin);
+            stream.Seek(DosHeader.e_lfanew, SeekOrigin.Begin);
 
             UInt32 ntHeadersSignature = reader.ReadUInt32();
             FileHeader = new FileHeader(stream);
@@ -45,7 +43,7 @@ namespace PELib
 
             if (OptionalHeader.ImportTable != null) {
                 var idir_fo  = RvaToFileOffset(OptionalHeader.ImportTable.VirtualAddress);
-                stream.Seek(zeroOffset + idir_fo, SeekOrigin.Begin);
+                stream.Seek(idir_fo, SeekOrigin.Begin);
 
                 while (true) {
                     var dir = new ImportDirectoryTable(stream);
@@ -53,10 +51,10 @@ namespace PELib
 
                     var pos = stream.Position;
 
-                    var name = stream.ReadNullTerminatedString(zeroOffset + dir.NameRva, Encoding.ASCII);
+                    var name = stream.ReadNullTerminatedString(dir.NameRva, Encoding.ASCII);
 
 
-                    stream.Position = zeroOffset + dir.ImportLookupTableRva;
+                    stream.Position = dir.ImportLookupTableRva;
                     var table = new ImportLookupTable(stream, OptionalHeader.IsPE32Plus);
 
 
