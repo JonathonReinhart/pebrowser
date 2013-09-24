@@ -72,7 +72,7 @@ namespace PEBrowser.Controls
             else
                 dgvFileHeader.Rows.Add("Machine", (UInt16)fh.Machine);
             dgvFileHeader.Rows.Add("Number of Sections", fh.NumberOfSections);
-            dgvFileHeader.Rows.Add("Time Date Stamp", fh.TimeDateStamp, PEFile.PE.TimeStamp);
+            dgvFileHeader.Rows.Add("Time Date Stamp", fh.TimeDateStamp, fh.TimeStamp);
             dgvFileHeader.Rows.Add("Pointer to Symbol Table", fh.PointerToSymbolTable);
             dgvFileHeader.Rows.Add("Number of Symbols", fh.NumberOfSymbols);
             dgvFileHeader.Rows.Add("Size of Optional Header", fh.SizeOfOptionalHeader);

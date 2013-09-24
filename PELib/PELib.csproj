@@ -39,8 +39,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataDirectory.cs" />
+    <Compile Include="DosHeader.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="FileHeader.cs" />
+    <Compile Include="OptionalHeader.cs" />
     <Compile Include="PeFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SectionHeader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
