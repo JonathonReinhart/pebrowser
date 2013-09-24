@@ -66,8 +66,6 @@ namespace PEBrowser.Controls
             var oh = PEFile.PE.OptionalHeader;
 
             foreach (var s in PEFile.PE.ImageSectionHeaders) {
-                
-
                 var va = s.VirtualAddress + PEFile.PE.OptionalHeader.ImageBase;
 
                 object objva;
@@ -79,6 +77,21 @@ namespace PEBrowser.Controls
                 dgvSections.Rows.Add(s.Name, objva, s.VirtualSize,
                     s.SizeOfRawData, s.PointerToRawData, (UInt32)s.Characteristics);
             }
+
+            // Show EOF extra data as a section
+            uint extraLength;
+            uint extraStart;
+            if (PEHelper.DetectExtraData(m_pe, out extraStart, out extraLength)) {
+                var rownum = dgvSections.Rows.Add("[EOF Extra Data]", null, null,
+                                     extraLength, extraStart);
+                MakeItalic(dgvSections.Rows[rownum].Cells[0]);
+            }
+
+
+        }
+
+        private static void MakeItalic(DataGridViewCell cell) {
+            cell.Style.Font = new Font(DataGridView.DefaultFont, FontStyle.Italic);
         }
     }
 }
