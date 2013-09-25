@@ -14,12 +14,20 @@ namespace PELib
         public UInt32 VirtualAddress { get; set; }
         public UInt32 Size { get; set; }
 
+        public bool IsZero { get { return Size == 0 && VirtualAddress == 0; } }
+
         public DataDirectory(Stream stream)
         {
             var br = new BinaryReader(stream);
 
             VirtualAddress = br.ReadUInt32();
             Size = br.ReadUInt32();
+        }
+
+        public static bool IsNullOrEmpty(DataDirectory dd) {
+            if (dd == null) return true;
+            if (dd.IsZero) return true;
+            return false;
         }
     }
 

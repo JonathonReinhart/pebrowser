@@ -26,6 +26,10 @@ namespace PELib
         }
 
         public PeFile(Stream stream) {
+
+            CalcChecksum(stream);
+
+            stream.Position = 0;
             var reader = new BinaryReader(stream, Encoding.ASCII);
             DosHeader = FromBinaryReader<IMAGE_DOS_HEADER>(reader);
 
@@ -53,8 +57,20 @@ namespace PELib
 
         }
 
-        
+        private void CalcChecksum(Stream stream) {
+            var buf = new byte[stream.Length];
+            stream.Read(buf, 0, buf.Length);
 
+            uint HeaderSum;
+            uint CheckSum;
+            var result = Imagehlp.CheckSumMappedFile(buf, (uint)buf.Length, out HeaderSum, out CheckSum);
+            if (result == IntPtr.Zero)
+                throw new Exception(String.Format("CheckSumMappedFile() failed {0}", Marshal.GetLastWin32Error()));
+
+            CalculatedCheckSum = CheckSum;
+        }
+
+        public UInt32 CalculatedCheckSum { get; private set; }
 
         uint RvaToFileOffset(uint rva) {
             // Iterate over the section headers to find the section that has this RVA.
@@ -147,7 +163,7 @@ namespace PELib
 
         private void ReadImportTable(Stream stream)
         {
-            if (OptionalHeader.ImportTable == null) return;
+            if (DataDirectory.IsNullOrEmpty(OptionalHeader.ImportTable)) return;
 
             var fo = RvaToFileOffset(OptionalHeader.ImportTable.VirtualAddress);
             stream.Position = fo;
@@ -164,7 +180,7 @@ namespace PELib
 
         private void ReadExportTable(Stream stream)
         {
-            if (OptionalHeader.ExportTable == null) return;
+            if (DataDirectory.IsNullOrEmpty(OptionalHeader.ExportTable)) return;
 
             var fo = RvaToFileOffset(OptionalHeader.ExportTable.VirtualAddress);
             stream.Position = fo;

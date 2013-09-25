@@ -51,6 +51,8 @@ namespace PEBrowser.Controls
             if (PEFile == null) return;
 
             var et = PEFile.PE.ExportTable;
+            if (et == null) return;
+
             foreach (var entry in et.ExportEntries) {
                 var addr = entry.RVA + PEFile.PE.OptionalHeader.ImageBase;
                 object oAddr;

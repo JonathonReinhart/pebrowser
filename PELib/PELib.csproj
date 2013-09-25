@@ -44,6 +44,7 @@
     <Compile Include="ExportTable.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="FileHeader.cs" />
+    <Compile Include="Imagehlp.cs" />
     <Compile Include="ImportDirectory.cs" />
     <Compile Include="OptionalHeader.cs" />
     <Compile Include="PeFile.cs" />

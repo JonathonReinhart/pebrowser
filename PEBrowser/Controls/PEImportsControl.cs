@@ -53,6 +53,7 @@ namespace PEBrowser.Controls
             if (PEFile == null) return;
 
             var imp = PEFile.PE.ImportTable;
+            if (imp == null) return;
 
             foreach (var impDir in imp.ImportDirectories) {
                 int r = dgvLibraries.Rows.Add(impDir.Name);

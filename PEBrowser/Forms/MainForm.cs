@@ -126,6 +126,14 @@ namespace PEBrowser.Forms
         private void OnFileOpened() {
             LogLineFormat("File size: 0x{0:X} ({0})", m_pe.FileSize);
 
+
+            var correct = "";
+            var hdrCksum = m_pe.PE.OptionalHeader.CheckSum;
+            if (hdrCksum != 0)
+                correct = (hdrCksum == m_pe.PE.CalculatedCheckSum) ? "Correct" : "INCORRECT";
+            LogLineFormat("Header's Checksum: 0x{0:X08}   Actual Checksum: 0x{1:X08}  {2}",
+                hdrCksum, m_pe.PE.CalculatedCheckSum, correct);
+
             uint extraLength;
             uint extraStart;
             if (PEHelper.DetectExtraData(m_pe, out extraStart, out extraLength)) {
