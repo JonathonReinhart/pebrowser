@@ -43,6 +43,7 @@
     <Compile Include="DosHeader.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="FileHeader.cs" />
+    <Compile Include="ImportDirectory.cs" />
     <Compile Include="OptionalHeader.cs" />
     <Compile Include="PeFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
