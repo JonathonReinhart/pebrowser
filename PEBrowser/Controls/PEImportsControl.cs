@@ -93,7 +93,7 @@ namespace PEBrowser.Controls
             foreach (var entry in impDir.ImportLookupTable.Entries) {
                 var oe = entry as OrdinalImportLookupTableEntry;
                 if (oe != null) {
-                    dgvFunctions.Rows.Add(oe.Ordinal, "(Ordinal)");
+                    dgvFunctions.Rows.Add(null, oe.Ordinal);
                     continue;
                 }
 
