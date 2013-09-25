@@ -62,6 +62,12 @@
     <Compile Include="Controls\PEHeaderControl.Designer.cs">
       <DependentUpon>PEHeaderControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PEImportsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PEImportsControl.Designer.cs">
+      <DependentUpon>PEImportsControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PESectionHeadersControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -90,6 +96,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PEHeaderControl.resx">
       <DependentUpon>PEHeaderControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PEImportsControl.resx">
+      <DependentUpon>PEImportsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PESectionHeadersControl.resx">
       <DependentUpon>PESectionHeadersControl.cs</DependentUpon>
