@@ -50,9 +50,11 @@
             this.peDataDirectoriesControl = new PEBrowser.Controls.PEDataDirectoriesControl();
             this.tabPageSections = new System.Windows.Forms.TabPage();
             this.peSectionHeadersControl = new PEBrowser.Controls.PESectionHeadersControl();
-            this.logBox = new PEBrowser.Controls.LogBox();
             this.tabPageImports = new System.Windows.Forms.TabPage();
             this.peImportsControl = new PEBrowser.Controls.PEImportsControl();
+            this.tabPageExports = new System.Windows.Forms.TabPage();
+            this.logBox = new PEBrowser.Controls.LogBox();
+            this.peExportsControl = new PEBrowser.Controls.PEExportsControl();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -63,6 +65,7 @@
             this.tabPageDataDirectories.SuspendLayout();
             this.tabPageSections.SuspendLayout();
             this.tabPageImports.SuspendLayout();
+            this.tabPageExports.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -218,6 +221,7 @@
             this.tabControl1.Controls.Add(this.tabPageDataDirectories);
             this.tabControl1.Controls.Add(this.tabPageSections);
             this.tabControl1.Controls.Add(this.tabPageImports);
+            this.tabControl1.Controls.Add(this.tabPageExports);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -285,15 +289,6 @@
             this.peSectionHeadersControl.Size = new System.Drawing.Size(801, 466);
             this.peSectionHeadersControl.TabIndex = 0;
             // 
-            // logBox
-            // 
-            this.logBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.logBox.Location = new System.Drawing.Point(0, 0);
-            this.logBox.Name = "logBox";
-            this.logBox.NewestOnTop = false;
-            this.logBox.Size = new System.Drawing.Size(809, 177);
-            this.logBox.TabIndex = 0;
-            // 
             // tabPageImports
             // 
             this.tabPageImports.Controls.Add(this.peImportsControl);
@@ -305,7 +300,7 @@
             this.tabPageImports.Text = "Imports";
             this.tabPageImports.UseVisualStyleBackColor = true;
             // 
-            // peImportsControl1
+            // peImportsControl
             // 
             this.peImportsControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.peImportsControl.Location = new System.Drawing.Point(3, 3);
@@ -313,6 +308,34 @@
             this.peImportsControl.PEFile = null;
             this.peImportsControl.Size = new System.Drawing.Size(795, 460);
             this.peImportsControl.TabIndex = 0;
+            // 
+            // tabPageExports
+            // 
+            this.tabPageExports.Controls.Add(this.peExportsControl);
+            this.tabPageExports.Location = new System.Drawing.Point(4, 22);
+            this.tabPageExports.Name = "tabPageExports";
+            this.tabPageExports.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageExports.Size = new System.Drawing.Size(801, 466);
+            this.tabPageExports.TabIndex = 4;
+            this.tabPageExports.Text = "Exports";
+            this.tabPageExports.UseVisualStyleBackColor = true;
+            // 
+            // logBox
+            // 
+            this.logBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.logBox.Location = new System.Drawing.Point(0, 0);
+            this.logBox.Name = "logBox";
+            this.logBox.NewestOnTop = false;
+            this.logBox.Size = new System.Drawing.Size(809, 177);
+            this.logBox.TabIndex = 0;
+            // 
+            // peExportsControl1
+            // 
+            this.peExportsControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.peExportsControl.Location = new System.Drawing.Point(3, 3);
+            this.peExportsControl.Name = "peExportsControl";
+            this.peExportsControl.Size = new System.Drawing.Size(795, 460);
+            this.peExportsControl.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -338,6 +361,7 @@
             this.tabPageDataDirectories.ResumeLayout(false);
             this.tabPageSections.ResumeLayout(false);
             this.tabPageImports.ResumeLayout(false);
+            this.tabPageExports.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -371,6 +395,8 @@
         private Controls.PESectionHeadersControl peSectionHeadersControl;
         private System.Windows.Forms.TabPage tabPageImports;
         private Controls.PEImportsControl peImportsControl;
+        private System.Windows.Forms.TabPage tabPageExports;
+        private Controls.PEExportsControl peExportsControl;
     }
 }
 

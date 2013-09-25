@@ -21,6 +21,7 @@ namespace PEBrowser.Forms
                 peDataDirectoriesControl,
                 peSectionHeadersControl,
                 peImportsControl,
+                peExportsControl,
             };
 
             LogLine("Started up.");

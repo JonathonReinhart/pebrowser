@@ -56,6 +56,12 @@
     <Compile Include="Controls\PEDataDirectoriesControl.Designer.cs">
       <DependentUpon>PEDataDirectoriesControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PEExportsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PEExportsControl.Designer.cs">
+      <DependentUpon>PEExportsControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PEHeaderControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -93,6 +99,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PEDataDirectoriesControl.resx">
       <DependentUpon>PEDataDirectoriesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PEExportsControl.resx">
+      <DependentUpon>PEExportsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PEHeaderControl.resx">
       <DependentUpon>PEHeaderControl.cs</DependentUpon>
