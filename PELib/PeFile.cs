@@ -49,9 +49,11 @@ namespace PELib
 
 
             ReadImportTable(stream);
+            ReadExportTable(stream);
 
         }
 
+        
 
 
         uint RvaToFileOffset(uint rva) {
@@ -145,12 +147,30 @@ namespace PELib
 
         private void ReadImportTable(Stream stream)
         {
-            if (OptionalHeader.ImportTable != null) {
-                var fo = RvaToFileOffset(OptionalHeader.ImportTable.VirtualAddress);
-                stream.Seek(fo, SeekOrigin.Begin);
+            if (OptionalHeader.ImportTable == null) return;
 
-                ImportTable = ImportTable.Read(stream, OptionalHeader.IsPE32Plus);
-            }
+            var fo = RvaToFileOffset(OptionalHeader.ImportTable.VirtualAddress);
+            stream.Position = fo;
+
+            ImportTable = ImportTable.Read(stream, OptionalHeader.IsPE32Plus);
+        }
+
+        #endregion
+
+
+        #region Export Table
+
+        public ExportTable ExportTable { get; private set; }
+
+        private void ReadExportTable(Stream stream)
+        {
+            if (OptionalHeader.ExportTable == null) return;
+
+            var fo = RvaToFileOffset(OptionalHeader.ExportTable.VirtualAddress);
+            stream.Position = fo;
+
+            ExportTable = ExportTable.Read(stream);
+
         }
 
         #endregion
