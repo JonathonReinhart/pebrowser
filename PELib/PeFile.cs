@@ -72,7 +72,7 @@ namespace PELib
 
         public UInt32 CalculatedCheckSum { get; private set; }
 
-        uint RvaToFileOffset(uint rva) {
+        public uint RvaToFileOffset(uint rva) {
             // Iterate over the section headers to find the section that has this RVA.
             var sec = ImageSectionHeaders.SingleOrDefault(sh => (rva > sh.VirtualAddress) && (rva < sh.VirtualAddress + sh.VirtualSize));
             if (sec == null)
@@ -168,7 +168,7 @@ namespace PELib
             var fo = RvaToFileOffset(OptionalHeader.ImportTable.VirtualAddress);
             stream.Position = fo;
 
-            ImportTable = ImportTable.Read(stream, OptionalHeader.IsPE32Plus);
+            ImportTable = ImportTable.Read(this, stream);
         }
 
         #endregion

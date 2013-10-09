@@ -13,12 +13,12 @@ namespace PELib
         private readonly List<ImportDirectory> m_importDirectories = new List<ImportDirectory>();
         public IEnumerable<ImportDirectory> ImportDirectories { get { return m_importDirectories; } }
 
-        public static ImportTable Read(Stream stream, bool isPE32Plus)
+        public static ImportTable Read(PeFile pe, Stream stream)
         {
             var tbl = new ImportTable();
 
             while (true) {
-                var imp = ImportDirectory.Read(stream, isPE32Plus);
+                var imp = ImportDirectory.Read(pe, stream);
                 if (imp == null) break;
 
                 tbl.m_importDirectories.Add(imp);
@@ -36,7 +36,7 @@ namespace PELib
 
         private ImportDirectory() { }
 
-        public static ImportDirectory Read(Stream stream, bool isPe32Plus)
+        public static ImportDirectory Read(PeFile pe, Stream stream)
         {
             var dir = new ImportDirectoryTable(stream);
             if (dir.IsNull) return null;
@@ -46,10 +46,11 @@ namespace PELib
             try {
                 var result = new ImportDirectory();
 
-                result.Name = stream.ReadNullTerminatedString(dir.NameRva, Encoding.ASCII);
+                var fo = pe.RvaToFileOffset(dir.NameRva);
+                result.Name = stream.ReadNullTerminatedString(fo, Encoding.ASCII);
 
-                stream.Position = dir.ImportLookupTableRva;
-                result.ImportLookupTable = new ImportLookupTable(stream, isPe32Plus);
+                stream.Position = pe.RvaToFileOffset(dir.ImportLookupTableRva);
+                result.ImportLookupTable = new ImportLookupTable(pe, stream);
 
                 return result;
             }
@@ -113,9 +114,10 @@ namespace PELib
         public IEnumerable<ImportLookupTableEntry> Entries { get { return m_entries; } }
 
 
-        public ImportLookupTable(Stream stream, bool pe32Plus)
+        public ImportLookupTable(PeFile pe, Stream stream)
         {
             var br = new BinaryReader(stream, Encoding.ASCII);
+            var pe32Plus = pe.OptionalHeader.IsPE32Plus;
 
             UInt64 ordinalMask = pe32Plus ? (1u << 63) : (1u << 31);
 
@@ -133,7 +135,7 @@ namespace PELib
                     var pos = stream.Position;
 
                     UInt32 hintNameRva = (UInt32)(val & 0x7FFFFFFF);
-                    stream.Seek(hintNameRva, SeekOrigin.Begin);
+                    stream.Seek(pe.RvaToFileOffset(hintNameRva), SeekOrigin.Begin);
 
                     var hint = br.ReadUInt16();
                     var name = br.ReadNullTerminatedString();
