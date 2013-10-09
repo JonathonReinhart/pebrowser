@@ -74,7 +74,7 @@ namespace PELib
 
         public uint RvaToFileOffset(uint rva) {
             // Iterate over the section headers to find the section that has this RVA.
-            var sec = ImageSectionHeaders.SingleOrDefault(sh => (rva > sh.VirtualAddress) && (rva < sh.VirtualAddress + sh.VirtualSize));
+            var sec = ImageSectionHeaders.SingleOrDefault(sh => (rva >= sh.VirtualAddress) && (rva < sh.VirtualAddress + sh.VirtualSize));
             if (sec == null)
                 throw new Exception("Section with containing VA not found.");
 
@@ -185,7 +185,7 @@ namespace PELib
             var fo = RvaToFileOffset(OptionalHeader.ExportTable.VirtualAddress);
             stream.Position = fo;
 
-            ExportTable = ExportTable.Read(stream);
+            ExportTable = ExportTable.Read(this, stream);
 
         }
 

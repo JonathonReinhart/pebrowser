@@ -41,7 +41,7 @@ namespace PELib
         #endregion
 
 
-        public static ExportTable Read(Stream stream)
+        public static ExportTable Read(PeFile pe, Stream stream)
         {
             var result = new ExportTable();
 
@@ -59,30 +59,30 @@ namespace PELib
             var namePtrRva = br.ReadUInt32();           // Address of name pointer table
             var ordTblRva = br.ReadUInt32();            // Address of ordinal table
 
-            result.Name = stream.ReadNullTerminatedString(nameRva, Encoding.ASCII);
+            result.Name = stream.ReadNullTerminatedString(pe.RvaToFileOffset(nameRva), Encoding.ASCII);
 
 
 
             // "The export address table contains the address of exported entry points and exported data
             // and absolutes. An ordinal number is used as an index into the export address table."
             var exportTable = new UInt32[numAddrs];
-            stream.Position = exportAddrTblRva;
+            stream.Position = pe.RvaToFileOffset(exportAddrTblRva);
             for (int i = 0; i < numAddrs; i++) {
                 exportTable[i] = br.ReadUInt32();
             }
 
             // "The export name pointer table is an array of addresses (RVAs) into the export name table."
             var nameTable = new string[numNamesAndOrds];
-            stream.Position = namePtrRva;
+            stream.Position = pe.RvaToFileOffset(namePtrRva);
             for (int i = 0; i < numNamesAndOrds; i++) {
                 var rva = br.ReadUInt32();
-                nameTable[i] = stream.ReadNullTerminatedString(rva, Encoding.ASCII);
+                nameTable[i] = stream.ReadNullTerminatedString(pe.RvaToFileOffset(rva), Encoding.ASCII);
             }
 
             // "The export ordinal table is an array of 16-bit indexes into the export address table."
             // JR: The actual ordinals are the values in this table, plus the ordinal base.
             var ordinalTable = new UInt16[numNamesAndOrds];
-            stream.Position = ordTblRva;
+            stream.Position = pe.RvaToFileOffset(ordTblRva);
             for (int i = 0; i < numNamesAndOrds; i++) {
                 ordinalTable[i] = br.ReadUInt16();
             }
