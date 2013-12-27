@@ -26,16 +26,12 @@ namespace PELib
         }
 
         public static string ReadNullTerminatedString(this Stream s, long position, Encoding encoding) {
-            var oldpos = s.Position;
+            using (new StreamKeeper(s)) {
+                s.Position = position;
+                var br = new BinaryReader(s, encoding);
 
-            s.Position = position;
-            var br = new BinaryReader(s, encoding);
-
-            var result = br.ReadNullTerminatedString();
-
-            s.Position = oldpos;
-
-            return result;
+                return br.ReadNullTerminatedString();
+            }
         }
     }
 }

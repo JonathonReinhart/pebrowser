@@ -41,9 +41,7 @@ namespace PELib
             var dir = new ImportDirectoryTable(stream);
             if (dir.IsNull) return null;
 
-            var pos = stream.Position;
-
-            try {
+            using (new StreamKeeper(stream)) {
                 var result = new ImportDirectory();
 
                 var fo = pe.RvaToFileOffset(dir.NameRva);
@@ -53,9 +51,6 @@ namespace PELib
                 result.ImportLookupTable = new ImportLookupTable(pe, stream);
 
                 return result;
-            }
-            finally {
-                stream.Position = pos;
             }
         }
     }
@@ -132,16 +127,14 @@ namespace PELib
                     m_entries.Add(new OrdinalImportLookupTableEntry(ord));
                 }
                 else {
-                    var pos = stream.Position;
+                    using (new StreamKeeper(stream)) {
+                        UInt32 hintNameRva = (UInt32)(val & 0x7FFFFFFF);
+                        stream.Position = pe.RvaToFileOffset(hintNameRva);
 
-                    UInt32 hintNameRva = (UInt32)(val & 0x7FFFFFFF);
-                    stream.Seek(pe.RvaToFileOffset(hintNameRva), SeekOrigin.Begin);
-
-                    var hint = br.ReadUInt16();
-                    var name = br.ReadNullTerminatedString();
-                    m_entries.Add(new NameImportLookupTableEntry(hint, name));
-
-                    stream.Position = pos;
+                        var hint = br.ReadUInt16();
+                        var name = br.ReadNullTerminatedString();
+                        m_entries.Add(new NameImportLookupTableEntry(hint, name));
+                    }
                 }
             }
         }

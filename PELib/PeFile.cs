@@ -178,8 +178,7 @@ namespace PELib
         {
             if (DataDirectory.IsNullOrEmpty(OptionalHeader.ImportTable)) return;
 
-            var fo = RvaToFileOffset(OptionalHeader.ImportTable.VirtualAddress);
-            stream.Position = fo;
+            stream.Position = RvaToFileOffset(OptionalHeader.ImportTable.VirtualAddress);
 
             ImportTable = ImportTable.Read(this, stream);
         }
@@ -195,8 +194,7 @@ namespace PELib
         {
             if (DataDirectory.IsNullOrEmpty(OptionalHeader.ExportTable)) return;
 
-            var fo = RvaToFileOffset(OptionalHeader.ExportTable.VirtualAddress);
-            stream.Position = fo;
+            stream.Position = RvaToFileOffset(OptionalHeader.ExportTable.VirtualAddress);
 
             ExportTable = ExportTable.Read(this, stream);
 
