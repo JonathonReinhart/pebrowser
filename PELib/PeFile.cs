@@ -26,19 +26,33 @@ namespace PELib
         }
 
         public PeFile(Stream stream) {
-
-            CalcChecksum(stream);
-
-            stream.Position = 0;
+            if (stream == null)
+                throw new ArgumentNullException("stream");
+            if (stream.Position != 0)
+                throw new ArgumentException("Stream position must be zero.");
+            
             var reader = new BinaryReader(stream, Encoding.ASCII);
-            DosHeader = FromBinaryReader<IMAGE_DOS_HEADER>(reader);
 
-            // Add 4 bytes to the offset
-            stream.Seek(DosHeader.e_lfanew, SeekOrigin.Begin);
+            // Verify COFF Header
+            DosHeader = FromBinaryReader<IMAGE_DOS_HEADER>(reader);
+            if (DosHeader.e_magic != IMAGE_DOS_SIGNATURE)    // 'MZ'
+                throw new PeException("Invalid MZ signature");
+
+            // Verify PE Header
+            stream.Position = DosHeader.e_lfanew;
 
             UInt32 ntHeadersSignature = reader.ReadUInt32();
-            if (ntHeadersSignature != 0x00004550)
-                throw new Exception("Invalid PE header signature");
+            if (ntHeadersSignature != IMAGE_NT_SIGNATURE)
+                throw new PeException("Invalid PE header signature");
+
+
+            // Calculate the checksum
+            stream.Position = 0;
+            CalcChecksum(stream);
+
+
+            // Process the subsequent headers
+            stream.Position = DosHeader.e_lfanew + 4;   // Skip ntHeadersSignature again
 
             FileHeader = new FileHeader(stream);
 
@@ -190,9 +204,21 @@ namespace PELib
         }
 
         #endregion
+
+        // ReSharper disable InconsistentNaming
+        private const UInt16 IMAGE_DOS_SIGNATURE = 0x5A4D;
+        private const UInt32 IMAGE_NT_SIGNATURE = 0x00004550;
+        // ReSharper restore InconsistentNaming
+
     }
 
 
+    public class PeException : Exception
+    {
+        public PeException() : base() { }
+        public PeException(string message) : base(message) { }
+        public PeException(string message, Exception innerException) : base(message, innerException) { }
+    }
 
 
 }

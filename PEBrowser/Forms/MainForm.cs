@@ -129,8 +129,14 @@ namespace PEBrowser.Forms
 
             LogLineFormat("Open File: {0}", path);
 
-            m_pe = OpenPEFile.Open(path);
-      
+            try {
+                m_pe = OpenPEFile.Open(path);
+            }
+            catch (PeException ex) {
+                LogLineFormat("Error opening PE File: {0}", ex.Message);
+                return;
+            }
+
             OnFileOpened();
         }
 
