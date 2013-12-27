@@ -132,7 +132,10 @@ namespace PEBrowser.Forms
             try {
                 m_pe = OpenPEFile.Open(path);
             }
-            catch (PeException ex) {
+            catch (Exception ex) {
+                if (!(ex is PeException || ex is IOException))
+                    throw;
+
                 LogLineFormat("Error opening PE File: {0}", ex.Message);
                 return;
             }
