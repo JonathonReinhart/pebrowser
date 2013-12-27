@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
+using System.Security.Cryptography.Pkcs;
 using System.Text;
 using PELib.ExtensionMethods;
+
 
 namespace PELib
 {
@@ -76,6 +77,8 @@ namespace PELib
             var br = new BinaryReader(stream);
             var wCertificateType = br.ReadUInt16();
 
+            length -= (4 + 2 + 2);
+
             switch (wCertificateType)
             {
                 case WIN_CERT_TYPE_X509:
@@ -114,6 +117,14 @@ namespace PELib
     public sealed class PkcsSignedDataCertificateTableEntry : CertificateTableEntry
     {
         public new static PkcsSignedDataCertificateTableEntry Read(Stream stream, int length) {
+            var br = new BinaryReader(stream);
+            var b = br.ReadBytes(length);
+
+            var cms = new SignedCms();
+            cms.Decode(b);
+            
+
+
             return new PkcsSignedDataCertificateTableEntry();
         }
 
