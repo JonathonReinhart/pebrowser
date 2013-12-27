@@ -13,7 +13,7 @@ namespace PEBrowser.Forms
         private OpenPEFile m_pe;
         private readonly IEnumerable<IPEFileViewer> m_peFileViewers;
 
-        public MainForm()
+        public MainForm(string[] args)
         {
             InitializeComponent();
 
@@ -28,7 +28,15 @@ namespace PEBrowser.Forms
             AllowDrop = true;
 
             LogLine("Started up.");
+
+            if (args.Length > 0) {
+                OpenFile(args[0]);
+            }
         }
+
+        public MainForm() : this(new string[]{}) { }
+
+
 
         #region Logging
         public void LogLine(string line) {
