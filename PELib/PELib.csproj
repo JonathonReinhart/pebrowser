@@ -39,10 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CertificateTable.cs" />
     <Compile Include="DataDirectory.cs" />
     <Compile Include="DosHeader.cs" />
     <Compile Include="ExportTable.cs" />
-    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\IntegralExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\StreamExtensionMethods.cs" />
     <Compile Include="FileHeader.cs" />
     <Compile Include="Imagehlp.cs" />
     <Compile Include="ImportDirectory.cs" />

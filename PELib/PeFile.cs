@@ -67,7 +67,7 @@ namespace PELib
 
             ReadImportTable(stream);
             ReadExportTable(stream);
-
+            ReadCertificateTable(stream);
         }
 
         private void CalcChecksum(Stream stream) {
@@ -201,6 +201,26 @@ namespace PELib
         }
 
         #endregion
+
+        #region Certificate Table
+
+        public CertificateTable CertificateTable { get; private set; }
+
+        private void ReadCertificateTable(Stream stream)
+        {
+            var certTable = OptionalHeader.CertificateTable;
+            if (DataDirectory.IsNullOrEmpty(certTable)) return;
+
+            // "The Certificate Table entry points to a table of attribute certificates. These
+            //  certificates are not loaded into memory as part of the image. As such, the first field
+            //  of this entry, which is normally an RVA, is a file pointer instead."
+            stream.Position = certTable.VirtualAddress;
+
+            CertificateTable = CertificateTable.Read(this, stream, certTable.Size);
+        }
+
+        #endregion
+
 
         // ReSharper disable InconsistentNaming
         private const UInt16 IMAGE_DOS_SIGNATURE = 0x5A4D;
