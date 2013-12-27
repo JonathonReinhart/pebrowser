@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using PELib;
 
 namespace PEBrowser.Forms
 {
-    internal partial class MainForm : Form
+    internal sealed partial class MainForm : Form
     {
         private OpenPEFile m_pe;
         private readonly IEnumerable<IPEFileViewer> m_peFileViewers;
@@ -23,6 +24,8 @@ namespace PEBrowser.Forms
                 peImportsControl,
                 peExportsControl,
             };
+
+            AllowDrop = true;
 
             LogLine("Started up.");
         }
@@ -171,9 +174,27 @@ namespace PEBrowser.Forms
 
         #endregion
 
+        #region Drag-n-drop
+
+        protected override void OnDragEnter(DragEventArgs e) {
+            base.OnDragEnter(e);
+
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+        }
+
+        protected override void OnDragDrop(DragEventArgs e) {
+            base.OnDragDrop(e);
+
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            var file = files.FirstOrDefault();
+            if (file != null)
+                OpenFile(file);
+        }
+
+        #endregion
 
 
-        
     }
 
 
