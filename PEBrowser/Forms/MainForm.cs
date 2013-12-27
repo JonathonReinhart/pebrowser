@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using PEBrowser.Resources;
 using PELib;
 
 namespace PEBrowser.Forms
@@ -23,6 +24,7 @@ namespace PEBrowser.Forms
                 peSectionHeadersControl,
                 peImportsControl,
                 peExportsControl,
+                peCertificatesControl
             };
 
             AllowDrop = true;
@@ -206,8 +208,17 @@ namespace PEBrowser.Forms
 
             var files = (string[])e.Data.GetData(DataFormats.FileDrop);
             var file = files.FirstOrDefault();
-            if (file != null)
+            if (file == null)
+                return;
+
+            // A drag drop handler is one of those places where exceptions
+            // can get swallowed, because it's crossing a COM boundary.
+            try {
                 OpenFile(file);
+            }
+            catch (Exception ex) {
+                ManualExceptionHandler.HandleException("drag & drop operation", ex);
+            }
         }
 
         #endregion

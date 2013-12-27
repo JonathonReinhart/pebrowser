@@ -41,7 +41,7 @@ namespace PELib
                         break;
 
                     default:
-                        Debug.WriteLine(String.Format("Unknown WIN_CERT_REVISION", wRevision));
+                        Debug.WriteLine("Unknown WIN_CERT_REVISION", wRevision);
                         break;
                 }
 
@@ -71,7 +71,12 @@ namespace PELib
     public abstract class CertificateTableEntry
     {
         public long Offset { get; internal set; }
+        
         public abstract string Type { get; }
+        public virtual string NameOfSigner { get { return "Unknown"; } }
+        public virtual string EmailAddress { get { return "Unknown"; } }
+        public virtual string Timestamp { get { return "Unknown"; } }
+
 
         public static CertificateTableEntry Read(Stream stream, int length) {
             var br = new BinaryReader(stream);
@@ -88,7 +93,7 @@ namespace PELib
                     return PkcsSignedDataCertificateTableEntry.Read(stream, length);
 
                 default:
-                    Debug.WriteLine(String.Format("Unknown/unsupported WIN_CERT_REVISION {0}", wCertificateType));
+                    Debug.WriteLine("Unknown/unsupported WIN_CERT_REVISION {0}", wCertificateType);
                     return null;
             }
         }
@@ -114,18 +119,24 @@ namespace PELib
         }
     }
 
+
+
     public sealed class PkcsSignedDataCertificateTableEntry : CertificateTableEntry
     {
+        public SignedCms Cms { get; private set; }
+
+        private PkcsSignedDataCertificateTableEntry(SignedCms cms) {
+            Cms = cms;
+        }
+
         public new static PkcsSignedDataCertificateTableEntry Read(Stream stream, int length) {
             var br = new BinaryReader(stream);
             var b = br.ReadBytes(length);
 
             var cms = new SignedCms();
             cms.Decode(b);
-            
 
-
-            return new PkcsSignedDataCertificateTableEntry();
+            return new PkcsSignedDataCertificateTableEntry(cms);
         }
 
         public override string Type {

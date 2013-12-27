@@ -53,10 +53,13 @@
             this.tabPageImports = new System.Windows.Forms.TabPage();
             this.peImportsControl = new PEBrowser.Controls.PEImportsControl();
             this.tabPageExports = new System.Windows.Forms.TabPage();
-            this.logBox = new PEBrowser.Controls.LogBox();
             this.peExportsControl = new PEBrowser.Controls.PEExportsControl();
+            this.tabPageCerts = new System.Windows.Forms.TabPage();
+            this.peCertificatesControl = new PEBrowser.Controls.PECertificatesControl();
+            this.logBox = new PEBrowser.Controls.LogBox();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -66,6 +69,7 @@
             this.tabPageSections.SuspendLayout();
             this.tabPageImports.SuspendLayout();
             this.tabPageExports.SuspendLayout();
+            this.tabPageCerts.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -222,6 +226,7 @@
             this.tabControl1.Controls.Add(this.tabPageSections);
             this.tabControl1.Controls.Add(this.tabPageImports);
             this.tabControl1.Controls.Add(this.tabPageExports);
+            this.tabControl1.Controls.Add(this.tabPageCerts);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -320,6 +325,35 @@
             this.tabPageExports.Text = "Exports";
             this.tabPageExports.UseVisualStyleBackColor = true;
             // 
+            // peExportsControl
+            // 
+            this.peExportsControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.peExportsControl.Location = new System.Drawing.Point(3, 3);
+            this.peExportsControl.Name = "peExportsControl";
+            this.peExportsControl.PEFile = null;
+            this.peExportsControl.Size = new System.Drawing.Size(795, 460);
+            this.peExportsControl.TabIndex = 0;
+            // 
+            // tabPageCerts
+            // 
+            this.tabPageCerts.Controls.Add(this.peCertificatesControl);
+            this.tabPageCerts.Location = new System.Drawing.Point(4, 22);
+            this.tabPageCerts.Name = "tabPageCerts";
+            this.tabPageCerts.Size = new System.Drawing.Size(801, 466);
+            this.tabPageCerts.TabIndex = 5;
+            this.tabPageCerts.Text = "Certificates";
+            this.tabPageCerts.UseVisualStyleBackColor = true;
+            // 
+            // peCertificatesControl1
+            // 
+            this.peCertificatesControl.BackColor = System.Drawing.SystemColors.Control;
+            this.peCertificatesControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.peCertificatesControl.Location = new System.Drawing.Point(0, 0);
+            this.peCertificatesControl.Margin = new System.Windows.Forms.Padding(0);
+            this.peCertificatesControl.Name = "peCertificatesControl";
+            this.peCertificatesControl.Size = new System.Drawing.Size(801, 466);
+            this.peCertificatesControl.TabIndex = 0;
+            // 
             // logBox
             // 
             this.logBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -328,14 +362,6 @@
             this.logBox.NewestOnTop = false;
             this.logBox.Size = new System.Drawing.Size(809, 177);
             this.logBox.TabIndex = 0;
-            // 
-            // peExportsControl1
-            // 
-            this.peExportsControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.peExportsControl.Location = new System.Drawing.Point(3, 3);
-            this.peExportsControl.Name = "peExportsControl";
-            this.peExportsControl.Size = new System.Drawing.Size(795, 460);
-            this.peExportsControl.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -355,6 +381,7 @@
             this.toolStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPageHeaders.ResumeLayout(false);
@@ -362,6 +389,7 @@
             this.tabPageSections.ResumeLayout(false);
             this.tabPageImports.ResumeLayout(false);
             this.tabPageExports.ResumeLayout(false);
+            this.tabPageCerts.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -397,6 +425,8 @@
         private Controls.PEImportsControl peImportsControl;
         private System.Windows.Forms.TabPage tabPageExports;
         private Controls.PEExportsControl peExportsControl;
+        private System.Windows.Forms.TabPage tabPageCerts;
+        private Controls.PECertificatesControl peCertificatesControl;
     }
 }
 

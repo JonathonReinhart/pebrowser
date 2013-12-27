@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography.Pkcs;
+using System.Windows.Forms;
 
 namespace PEBrowser
 {
@@ -33,5 +37,17 @@ namespace PEBrowser
         public static bool IsNumber(this object o) {
             return o.IsInteger() || o.IsFloatingPoint() || o is Decimal;
         }
+
+
+
+        public static object GetPrivateField<TObj>(this TObj obj, string fieldName)
+        {
+            var fieldInfo = typeof(TObj).GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+            if (fieldInfo == null)
+                throw new Exception(String.Format("Field name \"{0}\" could not be found.", fieldName));
+            return fieldInfo.GetValue(obj);
+        }
     }
+
+
 }
