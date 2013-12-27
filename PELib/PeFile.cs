@@ -45,15 +45,14 @@ namespace PELib
             if (ntHeadersSignature != IMAGE_NT_SIGNATURE)
                 throw new PeException("Invalid PE header signature");
 
-
             // Calculate the checksum
-            stream.Position = 0;
-            CalcChecksum(stream);
+            using (new StreamKeeper(stream)) {
+                stream.Position = 0;
+                CalcChecksum(stream);    
+            }
 
-
+            
             // Process the subsequent headers
-            stream.Position = DosHeader.e_lfanew + 4;   // Skip ntHeadersSignature again
-
             FileHeader = new FileHeader(stream);
 
             OptionalHeader = new OptionalHeader(stream);
