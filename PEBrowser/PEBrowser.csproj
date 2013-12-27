@@ -94,6 +94,8 @@
     <Compile Include="PEHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Properties\VersionInfo.Template.cs" />
+    <Compile Include="Properties\VersionInfo.cs" />
     <EmbeddedResource Include="Controls\LogBox.resx">
       <DependentUpon>LogBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -154,6 +156,9 @@
     <None Include="Resources\saveHS.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>subwcrev "$(SolutionDir)." "$(ProjectDir)Properties\VersionInfo.Template.cs" "$(ProjectDir)Properties\VersionInfo.cs" -f</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
