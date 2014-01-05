@@ -7,5 +7,6 @@
 #include <tchar.h>
 #include <Windows.h>
 #include <WinCrypt.h>
+#include <WinTrust.h>
 
 #include "CryptUI.h"
