@@ -45,6 +45,7 @@
     <Compile Include="DataDirectory.cs" />
     <Compile Include="DosHeader.cs" />
     <Compile Include="ExportTable.cs" />
+    <Compile Include="ExtensionMethods\CryptoExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\DNExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\IntegralExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\StreamExtensionMethods.cs" />

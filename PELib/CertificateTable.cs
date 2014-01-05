@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Cryptography.Pkcs;
 using System.Text;
 using CPI.DirectoryServices;
@@ -151,7 +152,7 @@ namespace PELib
         }
 
         public override string Type {
-            get { return "PKCS#7 SignedData"; }
+            get { return "PKCS#7 (Authenticode)"; }
         }
 
         public override string NameOfSigner
@@ -162,6 +163,14 @@ namespace PELib
         public override string EmailAddress
         {
             get { return m_dnSubj.GetRDNValue(DNEmail, DefaultString); }
+        }
+
+        public override string Timestamp
+        {
+            get {
+                var st = Cms.SignerInfos[0].GetSigningTime();
+                return st.HasValue ? st.Value.ToString() : DefaultString;
+            }
         }
     }
 }
