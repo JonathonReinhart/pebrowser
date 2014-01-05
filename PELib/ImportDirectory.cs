@@ -48,8 +48,15 @@ namespace PELib
                 var fo = pe.RvaToFileOffset(dir.NameRva);
                 result.Name = stream.ReadNullTerminatedString(fo, Encoding.ASCII);
 
-                stream.Position = pe.RvaToFileOffset(dir.ImportLookupTableRva);
-                result.ImportLookupTable = new ImportLookupTable(pe, stream);
+                var rva = dir.ImportLookupTableRva;
+                if (rva == 0)
+                    rva = dir.IatRva;
+
+                if (rva == 0)
+                    throw new PeException("Invalid import table RVA");
+                
+                stream.Position = pe.RvaToFileOffset(rva);
+                result.ImportLookupTable = new ImportLookupTable(pe, stream);    
 
                 return result;
             }
