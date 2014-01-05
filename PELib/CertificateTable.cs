@@ -162,7 +162,18 @@ namespace PELib
 
         public override string EmailAddress
         {
-            get { return m_dnSubj.GetRDNValue(DNEmail, DefaultString); }
+            get {
+                var si = Cms.SignerInfos[0];
+
+                const string subjectAltName = "2.5.29.17";
+                var ex = si.Certificate.Extensions[subjectAltName];
+                if (ex != null) {
+                    const int offset = 2 + 2;
+                    return Encoding.UTF8.GetString(ex.RawData, offset, ex.RawData.Length - offset);
+                }
+
+                return m_dnSubj.GetRDNValue(DNEmail, DefaultString);
+            }
         }
 
         public override string Timestamp
