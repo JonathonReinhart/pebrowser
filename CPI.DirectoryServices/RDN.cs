@@ -6,6 +6,8 @@
 *
 * (C) 2005 Pete Everett (http://www.CynicalPirate.com)
 *
+* http://www.codeproject.com/Articles/9788/An-RFC-2253-Compliant-Distinguished-Name-Parser
+* 
 *******************************************************************************/
 
 
