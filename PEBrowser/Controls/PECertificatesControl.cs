@@ -94,7 +94,7 @@ namespace PEBrowser.Controls
 
         private void View(PkcsSignedDataCertificateTableEntry cert)
         {
-            cert.Cms.ShowSignerInfoDialog();
+            cert.Cms.ShowSignerInfoDialog(this.Handle);
         }
     }
 }
