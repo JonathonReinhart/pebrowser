@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PELib", "PELib\PELib.csproj
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NativeCryptHelper", "NativeCryptHelper\NativeCryptHelper.vcxproj", "{A0AFB928-6CC3-4A07-ACD0-37C5488F8021}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CPI.DirectoryServices", "CPI.DirectoryServices\CPI.DirectoryServices.csproj", "{A7586740-2503-41AD-ABA8-EB523BE17153}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{A0AFB928-6CC3-4A07-ACD0-37C5488F8021}.Release|Win32.ActiveCfg = Release|Win32
 		{A0AFB928-6CC3-4A07-ACD0-37C5488F8021}.Release|Win32.Build.0 = Release|Win32
 		{A0AFB928-6CC3-4A07-ACD0-37C5488F8021}.Release|x86.ActiveCfg = Release|Win32
+		{A7586740-2503-41AD-ABA8-EB523BE17153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7586740-2503-41AD-ABA8-EB523BE17153}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7586740-2503-41AD-ABA8-EB523BE17153}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A7586740-2503-41AD-ABA8-EB523BE17153}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A7586740-2503-41AD-ABA8-EB523BE17153}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{A7586740-2503-41AD-ABA8-EB523BE17153}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A7586740-2503-41AD-ABA8-EB523BE17153}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7586740-2503-41AD-ABA8-EB523BE17153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7586740-2503-41AD-ABA8-EB523BE17153}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A7586740-2503-41AD-ABA8-EB523BE17153}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A7586740-2503-41AD-ABA8-EB523BE17153}.Release|Win32.ActiveCfg = Release|Any CPU
+		{A7586740-2503-41AD-ABA8-EB523BE17153}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
