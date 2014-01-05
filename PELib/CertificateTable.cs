@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography.Pkcs;
 using System.Text;
+using CPI.DirectoryServices;
 using PELib.ExtensionMethods;
 
 
@@ -70,12 +71,14 @@ namespace PELib
 
     public abstract class CertificateTableEntry
     {
+        protected const string DefaultString = "Unavailable";
+
         public long Offset { get; internal set; }
         
         public abstract string Type { get; }
-        public virtual string NameOfSigner { get { return "Unknown"; } }
-        public virtual string EmailAddress { get { return "Unknown"; } }
-        public virtual string Timestamp { get { return "Unknown"; } }
+        public virtual string NameOfSigner { get { return DefaultString; } }
+        public virtual string EmailAddress { get { return DefaultString; } }
+        public virtual string Timestamp { get { return DefaultString; } }
 
 
         public static CertificateTableEntry Read(Stream stream, int length) {
@@ -123,10 +126,18 @@ namespace PELib
 
     public sealed class PkcsSignedDataCertificateTableEntry : CertificateTableEntry
     {
+        // http://msdn.microsoft.com/en-us/library/windows/desktop/aa366101.aspx
+        private const string DNCommonName = "CN";
+        private const string DNEmail = "E";
+        
+        private readonly DN m_dnSubj;
+        
         public SignedCms Cms { get; private set; }
+
 
         private PkcsSignedDataCertificateTableEntry(SignedCms cms) {
             Cms = cms;
+            m_dnSubj = new DN(cms.SignerInfos[0].Certificate.Subject);
         }
 
         public new static PkcsSignedDataCertificateTableEntry Read(Stream stream, int length) {
@@ -141,6 +152,16 @@ namespace PELib
 
         public override string Type {
             get { return "PKCS#7 SignedData"; }
+        }
+
+        public override string NameOfSigner
+        {
+            get { return m_dnSubj.GetRDNValue(DNCommonName, DefaultString); }
+        }
+
+        public override string EmailAddress
+        {
+            get { return m_dnSubj.GetRDNValue(DNEmail, DefaultString); }
         }
     }
 }

@@ -45,6 +45,7 @@
     <Compile Include="DataDirectory.cs" />
     <Compile Include="DosHeader.cs" />
     <Compile Include="ExportTable.cs" />
+    <Compile Include="ExtensionMethods\DNExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\IntegralExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\StreamExtensionMethods.cs" />
     <Compile Include="FileHeader.cs" />
@@ -57,9 +58,9 @@
     <Compile Include="StreamKeeper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NativeCryptHelper\NativeCryptHelper.vcxproj">
-      <Project>{A0AFB928-6CC3-4A07-ACD0-37C5488F8021}</Project>
-      <Name>NativeCryptHelper</Name>
+    <ProjectReference Include="..\CPI.DirectoryServices\CPI.DirectoryServices.csproj">
+      <Project>{A7586740-2503-41AD-ABA8-EB523BE17153}</Project>
+      <Name>CPI.DirectoryServices</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
