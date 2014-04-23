@@ -25,11 +25,15 @@ namespace PELib
             }
         }
 
-        public PeFile(Stream stream) {
+        public PeFile(Stream stream, Action<PeWarning> onWarning = null)
+        {
             if (stream == null)
                 throw new ArgumentNullException("stream");
             if (stream.Position != 0)
                 throw new ArgumentException("Stream position must be zero.");
+
+            if (onWarning == null)
+                onWarning = x => { };     // Default to nothing
             
             var reader = new BinaryReader(stream, Encoding.ASCII);
 
@@ -63,11 +67,20 @@ namespace PELib
             // At this point we no longer care about the position of the stream.
             // Everything is located somewhere referenced by something else.
 
+            var actions = new[] {
+                new Tuple<Action<Stream>, string>(ReadImportTable, "Reading Import Table"),
+                new Tuple<Action<Stream>, string>(ReadExportTable, "Reading Export Table"),
+                new Tuple<Action<Stream>, string>(ReadCertificateTable, "Reading Certificate Table"),
+            };
 
-
-            ReadImportTable(stream);
-            ReadExportTable(stream);
-            ReadCertificateTable(stream);
+            foreach (var act in actions) {
+                try {
+                    act.Item1(stream);
+                }
+                catch (PeException pex) {
+                    onWarning(new PeWarning(act.Item2, pex));
+                }
+            }
         }
 
         private void CalcChecksum(Stream stream) {
@@ -235,6 +248,16 @@ namespace PELib
         public PeException() : base() { }
         public PeException(string message) : base(message) { }
         public PeException(string message, Exception innerException) : base(message, innerException) { }
+    }
+
+    public class PeWarning
+    {
+        public string During { get; private set; }
+        public PeException Exception { get; private set; }
+        public PeWarning(string during, PeException pex) {
+            During = during;
+            Exception = pex;
+        }
     }
 
 

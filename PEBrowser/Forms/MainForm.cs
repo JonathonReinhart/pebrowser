@@ -132,7 +132,7 @@ namespace PEBrowser.Forms
             LogLineFormat("Open File: {0}", path);
 
             try {
-                m_pe = OpenPEFile.Open(path);
+                m_pe = OpenPEFile.Open(path, warn => LogLineFormat("WARNING while {0}: {1}", warn.During, warn.Exception.Message));
             }
             catch (PeException ex) {
                 LogLineFormat("Error processing PE File: {0}", ex.Message);

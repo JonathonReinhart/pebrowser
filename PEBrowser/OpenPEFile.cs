@@ -17,14 +17,17 @@ namespace PEBrowser
 
         private OpenPEFile() { }
 
-        public static OpenPEFile Open(string path)
+        public static OpenPEFile Open(string path, Action<PeWarning> onWarning = null)
         {
+            if (onWarning == null)
+                onWarning = x => { };     // Default to nothing
+
             var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
             var pe = new OpenPEFile()
             {
                 Path = path,
                 Stream = stream,
-                PE = new PeFile(stream)
+                PE = new PeFile(stream, onWarning)
             };
             return pe;
         }
