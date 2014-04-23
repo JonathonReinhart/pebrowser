@@ -89,7 +89,7 @@ namespace PELib
             // Iterate over the section headers to find the section that has this RVA.
             var sec = ImageSectionHeaders.SingleOrDefault(sh => (rva >= sh.VirtualAddress) && (rva < sh.VirtualAddress + sh.VirtualSize));
             if (sec == null)
-                throw new Exception("Section with containing VA not found.");
+                throw new PeException(String.Format("Could not find section containing VA 0x{0:X}", rva));
 
             var off = rva - sec.VirtualAddress;
             return sec.PointerToRawData + off;
